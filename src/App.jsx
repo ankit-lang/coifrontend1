@@ -2,19 +2,17 @@ import { useState } from 'react'
 
 import './App.css'
 
-import ResponsiveAppBar from './components/Navbar'
 import { Button } from './components/ui/button'
+
+import Navbar from './components/Navbar'
 
 function App() {
  
 
   return (
     <>
-     {/* <Navbar/> */}
-     <Button>
-      Hwllo
-     </Button>
-     {/* <ResponsiveAppBar/> */}
+<Navbar/>
+
  
      
     </>
