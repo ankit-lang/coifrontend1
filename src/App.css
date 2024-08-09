@@ -14,6 +14,11 @@
 .bg3{
     background: #74B494;
 }
+@media (max-width:640px) {
+    .navlinks{
+      display: none;
+    }
+}
 @layer utilities {
     @keyframes marquee {
       0% { transform: translateX(100%); }

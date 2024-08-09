@@ -13,7 +13,7 @@ const Navbar = () => {
         <div className="  sm:absolute sm:left-5 logo w-20 h-12">
           <img src="CIO_LOGO.jpg" alt="" />
         </div>
-        <div className=" sm:hidden  md:hidden lg:flex items-center justify-evenly w-full">
+        <div className=" sm:hidden lg:flex items-center navlinks justify-evenly w-full">
           <div className="">Home</div>
           <div className="">About us</div>
           <div className="">Complaint Online</div>
