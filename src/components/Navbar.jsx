@@ -65,7 +65,9 @@ const Navbar = () => {
         <div className="">Grivance Redressal Officiers</div>
         <div className="">Related Links</div>
         <div className="">RTI</div>
-        <Button aria-describedby="popover2" onClick={handleClick2}>
+        {
+          isLogin ? ( <></>) : (<>
+           <Button aria-describedby="popover2" onClick={handleClick2}>
           <div className="bg-white p-2 hover:bg-green-700 rounded  text-green-600 hover:text-white">
             Login
           </div>
@@ -127,6 +129,8 @@ const Navbar = () => {
             </div>
           </Popover>
         </div>
+            </>)
+        }
 
         {isLogin ? (
           <>
