@@ -1,3 +1,4 @@
+
 import Popover from "@mui/material/Popover";
 
 import Button from "@mui/material/Button";
@@ -251,24 +252,34 @@ const Navbar = () => {
         ) : (
           <></>
         )}
+
       </div>
       <div className="home flex    ">
         <div className="flex">
           <div className="flex-1 w-1/2 p-11">
             <img className=" " src="./MainPgImg.jpg" alt="" />
           </div>
-          <div className="flex-1 w-1/2 p-7">
+
+          <div className="flex-1  ml-5 w-1/2 p-7">
             {" "}
             <img className=" " src="./VideoThumbnail.jpg" alt="" />
-            <div className="flex items-center justify-center text-blue-500">
+            <div className="flex items-center font-semibold justify-center  mr-10 text-blue-500">
+
               Self-help video for Online registration of complaint
             </div>
           </div>
         </div>
       </div>
+
       <div className="text-blue-600 ml-10 text-2xl m-3">
         Advertisement For Hiring Of Office Premises At Thane On Lease Basis
         Click here
+
+      <div className="text-blue-600 font-bold ml-10 text-3xl m-3">
+        Advertisement For Hiring Of Office Premises At Thane On Lease Basis
+        &nbsp;
+        <span className="text-red-700 cursor-pointer">Click here</span>
+
       </div>
       <div className="flex m-10">
         <div className="w-1/2">
@@ -285,45 +296,70 @@ const Navbar = () => {
             Intermediaries or Insurance Brokers in a speedy and cost-effective
             manner
           </div>
-          <div className="mt-5 font-bold text-green-800 text-3xl">
+
+          <div className="mt-5   font-bold text-green-800 text-3xl">
             Ways to submit/lodge the complaint
           </div>
-          <ul className="ml-2 text-green-800 mt-4">
+          <ul className="ml-2 list-disc  text-green-800 mt-4">
+            <li>Online : click here for registering</li>
             <li>
-              {" "}
-              <span className="w-5 h-5 inline-block  rounded-full border-x-zinc-500">
-                ◯
-              </span>{" "}
-              Online : click here for registering
-            </li>
-            <li>
-              ◯ Offline : a) using email, b) via post or c) walk-in to Insurance
+              Offline : a) using email, b) via post or c) walk-in to Insurance
               Ombudsman Office (click here for details) of centres, email id,
               address and jurisdiction.
             </li>
-            <li>◯ For tracking your complaint click here</li>
+            <li> For tracking your complaint click here</li>
           </ul>
         </div>
 
-        <div className="w-1/2 ml-10  ">
-          <div className="text-3xl text-green-800 ">
+        <div className="w-1/2 ml-10 bg2 p-2 rounded  ">
+          <div className="text-3xl text-green-800 mb-5  ">
             Before you submit your grievance to Insurance Ombudsman:
           </div>
           <div className="">
-            ○ You should have made a complaint to Insurance Company/Insurance
+            You should have made a complaint to Insurance Company/Insurance
             Broker ○Insurance Company/Insurance Broker has failed to furnish
             reply to you within a period of one month of your complaint; <br />
-            OR <br />
-            You are not satisfied with the response given by Insurance
-            Company/Insurance Broker The complaint is being made to the
-            Insurance Ombudsman within one year from (a) Date of rejection of
-            the complaint by the Insurance Company/Insurance Broker OR (b)
-            Expiry of one month of filing the complaint if the Insurer fails to
-            reply The amount of Compensation sought in Insurance Ombudsman
-            should not exceed Rs. 50 Lakhs.
+            <span className=" flex justify-center mb-2">OR</span>
+            &nbsp; &nbsp; You are not satisfied with the response given by
+            Insurance Company/Insurance Broker <br /> The complaint is being
+            made to the Insurance Ombudsman within one year from <br /> (a) Date
+            of rejection of the complaint by the Insurance Company/Insurance
+            Broker <br />
+            <span className="flex items-center justify-center">OR</span>
+            <br /> b) Expiry of one month of filing the complaint if the Insurer
+            fails to reply <br /> The amount of Compensation sought in Insurance
+            Ombudsman should not exceed Rs. 50 Lakhs. <br />
           </div>
+          <br />
+          <div className="bg-white mt-2 outline-green-700 shadow-lg border-green-700 flex items-center justify-center  text-green-700 hover:bg-green-700 hover:text-white   font-bold py-2 px-4 rounded ">
+            OK, REGISTER MY COMPLAINT
+          </div>
+          {/* <div className="bg-white inline-block    text-center  mt-2  text-green-700 hover:bg-green-700 hover:text-white   font-bold py-2 px-4 rounded">
+            <div className=" flex items-center justify-center" >OK, REGISTER MY COMPLAINT</div>
+          </div> */}
         </div>
       </div>
+
+      {/* //footer */}
+      <div className="bg-green-800 pl-14 pr-14 pt-6 ">
+        <div className="flex justify-evenly items-center underline   text-white">
+          <div className="">Archives</div>
+          <div className="">Download</div>
+          <div className="">Carrers</div>
+          <div className="">Contact us</div>
+        </div>
+        <div className="text-center text-white mt-5">
+          <div className="">
+            Visitor number: 35414188 since 7th December 2022
+          </div>
+          <div className="">Last Updated on: 01th July 2024</div>
+        </div>
+      </div>
+      <div class="border-t-2 border-dotted border-gray-500"></div>
+      <div className="text-white bg-green-800 text-center">
+        © CIO. All Rights Reserved 2021. Disclaimer.
+      </div>
+
     </div>
   );
 };
