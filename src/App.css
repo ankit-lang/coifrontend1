@@ -8,6 +8,20 @@
     background: #065830;
     height: 66px;
 }
+
+.pop{
+
+   
+    width: 50rem;
+}
+.column{
+    position: relative;
+    margin: 5px;
+}
+.inp{
+    padding: 0 !important ;
+}
+
 .bg2{
     background: #e4f9ec;
 }
@@ -33,3 +47,4 @@
       animation-play-state: paused;
     }
   }
+

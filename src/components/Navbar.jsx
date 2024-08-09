@@ -1,100 +1,285 @@
+
+import Popover from "@mui/material/Popover";
+
+import Button from "@mui/material/Button";
+import { useState, useEffect } from "react";
+
+import { Input } from "@mui/material";
+
 import React from "react";
-import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [isLogin, setIsLogin] = useState(false);
+  const [anchorEl2, setAnchorEl2] = useState(null);
+  const [myinput, setmyInput] = useState({
+    userName: "",
+    password: "",
+  });
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const submitHandler = (e) => {
+    console.log("sec");
+    e.preventDefault();
+    setmyInput({
+      userName: "",
+      password: "",
+    });
+
+    setIsLogin(true);
+  };
+  const changeHandler = (e) => {
+    console.log("first");
+    setmyInput({ ...myinput, [e.target.name]: e.target.value });
+    console.log(myinput);
+  };
+  const open2 = Boolean(anchorEl2);
+  const handleClose2 = () => {
+    setAnchorEl2(null);
+  };
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+  console.log(isLogin);
+
   return (
     <div>
-      <div className="flex justify-center items-center  pl-10 pr-5  font-semibold nav">
-        <div className="  sm:absolute sm:left-5 logo w-20 h-12">
+      <div className="flex justify-evenly items-center  font-semibold nav">
+        <div className="logo w-20 h-12">
           <img src="CIO_LOGO.jpg" alt="" />
         </div>
-        <div className=" sm:hidden lg:flex items-center navlinks justify-evenly w-full">
-          <div className="">Home</div>
-          <div className="">About us</div>
-          <div className="">Complaint Online</div>
-          <div className="">Publication</div>
-          <div className="">FAQs</div>
-          <div className="">Grivance Redressal Officiers</div>
-          <div className="">Related Links</div>
-          <div className="">RTI</div>
-          <div className="">
-            <button class="bg-white text-green-700  hover:bg-green-700  hover:text-white font-bold py-2 px-4 rounded">
-              Login
-            </button>
+        <div className="">Home</div>
+        <div className="">About us</div>
+        <div className="">Complaint Online</div>
+        <div className="">Publication</div>
+        <div className="">FAQs</div>
+        <div className="">Grivance Redressal Officiers</div>
+        <div className="">Related Links</div>
+        <div className="">RTI</div>
+        {
+          isLogin ? ( <></>) : (<>
+           <Button aria-describedby="popover2" onClick={handleClick2}>
+          <div className="bg-white p-2 hover:bg-green-700 rounded  text-green-600 hover:text-white">
+            Login
           </div>
+        </Button>
+
+        <div className="flex justify-center">
+          <Popover
+            id="popover2"
+            open={open2}
+            anchorEl={anchorEl2}
+            onClose={handleClose2}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "center",
+            }}
+          >
+            <div className="pop h-full  rounded flex justify-center items-center bg-gradient-to-br from-green-950 to-green-500   ">
+              <div className=" m-5 rounded">
+                <div className=" text-center mt-5 mb-5 text-white m-2 font-extrabold text-2xl shadow ">
+                  {" "}
+                  Please Login
+                </div>
+
+                <div className="">
+                  <form className="flex-col justify-center items-center"  onSubmit={submitHandler}>
+                   <div className="mt-10 flex items-center ">
+                  <span  className="text-white">   Username:  </span> &nbsp; &nbsp;
+                   <input
+                   className="rounded p-2 bg-green-200 "
+                      type="text"
+                      name="userName"
+                      value={myinput.userName}
+                      placeholder="Enter Your Username"
+                      onChange={(e) =>
+                        setmyInput({ ...myinput, userName: e.target.value })
+                      }
+                    />
+                   </div>
+                    <br />{" "}
+                    <div className=" mt-4 ">
+                      <span className="text-white" >Password:   </span>  &nbsp; &nbsp;
+                      <input
+                        className="rounded p-2  bg-green-200"
+                        placeholder="Enter Your password"
+                        type="password"
+                        name="password"
+                        value={myinput.password}
+                        onChange={(e) =>
+                          setmyInput({ ...myinput, password: e.target.value })
+                        }
+                      />
+                    </div>
+                     <div className="text-center mt-10 flex justify-center items-center bg-green-300 text-green-700 p-2 rounded hover:bg-green-700 inline-block hover:cursor-pointer hover:text-white">
+                     <button type="submit" className="w-20" >Submit</button>
+                     </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </Popover>
         </div>
-        <div className="absolute  right-10 z-10 rounded flex justify-center items-center ">
-      {/* Hamburger Button (visible only on small screens) */}
-      <button
-        onClick={toggleMenu}
-        className="inline-block md:hidden p-4 focus:outline-none"
-      >
-        <div className="w-6 h-0.5 bg-black mb-1"></div>
-        <div className="w-6 h-0.5 bg-black mb-1"></div>
-        <div className="w-6 h-0.5 bg-black"></div>
-      </button>
+            </>)
+        }
 
-      {/* Navigation Menu */}
-      <nav
-        className={`absolute top-full  w-40 bg-white border border-gray-300 rounded-lg shadow-lg p-2 ${isMenuOpen ? 'block' : 'hidden'} md:block`}
-      >
-        <ul className="space-y-2">
-          <li>
-            <a href="#" className="block text-gray-700 hover:bg-gray-100 p-2 rounded">
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="#" className="block text-gray-700 hover:bg-gray-100 p-2 rounded">
-              About
-            </a>
-          </li>
-          <li>
-            <a href="#" className="block text-gray-700 hover:bg-gray-100 p-2 rounded">
-              Services
-            </a>
-          </li>
-          <li>
-            <a href="#" className="block text-gray-700 hover:bg-gray-100 p-2 rounded">
-              Contact
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
+        {isLogin ? (
+          <>
+            <Button aria-describedby={id} onClick={handleClick}>
+              <div className="bg-white p-2 hover:bg-green-700 rounded  text-green-600 hover:text-white">
+                Show
+              </div>
+            </Button>
 
-      </div>
-      
+            <div className="flex justify-center">
+              <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "center",
+                }}
+              >
+                <div className="pop h-full flex justify-center items-center bg-gradient-to-br from-green-950 to-green-500   ">
+                  <div className="">
+                    <div className="text-right text-white m-2 font-extrabold text-2xl shadow ">
+                      {" "}
+                      Client Details
+                    </div>
+                    <table class="w-full text-white  text-left">
+                      <tbody>
+                        <tr class=" ">
+                          <th class=" px-4 absolute left-20 ">Name:</th>
+                          <td class=" px-4">XXXX</td>
+                        </tr>
 
-      <div class="overflow-hidden bg3 p-1 ">
-        <p class="animate-marquee hover:animation-pause whitespace-nowrap  ">
-          Insurance Ombudsman - One Stop Grievance Resolution -{" "}
-          <span className="   text-red-800"> Click here</span>
-        </p>
+                        <tr class="">
+                          <th class=" px-4 absolute left-20 ">DOB:</th>
+                          <td class=" px-4">XXXX</td>
+                        </tr>
+                        <tr class="">
+                          <th class="px-4 absolute left-20 ">PAN:</th>
+                          <td class=" px-4">XXXX</td>
+                        </tr>
+                        <tr class="">
+                          <th class=" px-4 absolute left-20">BANK Ac:</th>
+                          <td class=" px-4">XXXX</td>
+                        </tr>
+                        <tr class="">
+                          <th class=" px-4 absolute left-20 ">IFSC:</th>
+                          <td class=" px-4">XXXX</td>
+                        </tr>
+                        <tr class="">
+                          <th class=" px-4 absolute left-20 ">Mobile No.</th>
+                          <td class=" px-4">XXXX</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div className="">
+                      <div className="text-right text-white m-2  font-extrabold text-2xl shadow ">
+                        {" "}
+                        Fund Details
+                      </div>
+                      <table class="w-full text-white  text-left">
+                        <tbody>
+                          <tr class=" ">
+                            <th class="py-2 px-4 absolute left-20 ">
+                              Invested in Mutual Fund:
+                            </th>
+                            <td class="py-2 px-4">XXXX</td>
+                          </tr>
+
+                          <tr class="">
+                            <th class=" px-4 absolute left-20 ">
+                              Invested in Equity Fund:
+                            </th>
+                            <td class="px-4">XXXX</td>
+                          </tr>
+                          <tr class="">
+                            <th class=" px-4 absolute left-20 ">
+                              Consolidated Fund value:
+                            </th>
+                            <td class=" px-4">XXXX</td>
+                          </tr>
+                          <tr class="">
+                            <th class="px-4 absolute left-20">
+                              Commision Due:
+                            </th>
+                            <td class="px-4">XXXX</td>
+                          </tr>
+                          <tr class="">
+                            <th class=" px-4 absolute left-20 ">
+                              Commission Realised:
+                            </th>
+                            <td class=" px-4">XXXX</td>
+                          </tr>
+                          <tr class="">
+                            <th class="py-2 px-4 absolute left-20 ">
+                              Assigned officer Name:
+                            </th>
+                            <td class="py-2 px-4">XXXX</td>
+                          </tr>
+                          <tr class="">
+                            <th class=" px-4 absolute left-20 ">
+                              Assigned Officer Mobile:
+                            </th>
+                            <td class=" px-4">XXXX</td>
+                          </tr>
+                          <tr class="">
+                            <th class="py-2 px-4 absolute left-20 ">Status</th>
+                            <td class="py-2 px-4">XXXX</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </Popover>
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+
       </div>
       <div className="home flex    ">
         <div className="flex">
           <div className="flex-1 w-1/2 p-11">
             <img className=" " src="./MainPgImg.jpg" alt="" />
           </div>
+
           <div className="flex-1  ml-5 w-1/2 p-7">
             {" "}
             <img className=" " src="./VideoThumbnail.jpg" alt="" />
             <div className="flex items-center font-semibold justify-center  mr-10 text-blue-500">
+
               Self-help video for Online registration of complaint
             </div>
           </div>
         </div>
       </div>
+
+      <div className="text-blue-600 ml-10 text-2xl m-3">
+        Advertisement For Hiring Of Office Premises At Thane On Lease Basis
+        Click here
+
       <div className="text-blue-600 font-bold ml-10 text-3xl m-3">
         Advertisement For Hiring Of Office Premises At Thane On Lease Basis
         &nbsp;
         <span className="text-red-700 cursor-pointer">Click here</span>
+
       </div>
       <div className="flex m-10">
         <div className="w-1/2">
@@ -111,6 +296,7 @@ const Navbar = () => {
             Intermediaries or Insurance Brokers in a speedy and cost-effective
             manner
           </div>
+
           <div className="mt-5   font-bold text-green-800 text-3xl">
             Ways to submit/lodge the complaint
           </div>
@@ -173,6 +359,7 @@ const Navbar = () => {
       <div className="text-white bg-green-800 text-center">
         © CIO. All Rights Reserved 2021. Disclaimer.
       </div>
+
     </div>
   );
 };
