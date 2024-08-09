@@ -28,11 +28,21 @@
 .bg3{
     background: #74B494;
 }
+.navlinks{
+  display: flex;
+  width: 60%;
+  justify-content: space-between ;
+}
+.move{
+  background: #74B494;
+  color: red;
+}
 @media (max-width:640px) {
     .navlinks{
       display: none;
     }
 }
+
 @layer utilities {
     @keyframes marquee {
       0% { transform: translateX(100%); }
@@ -46,5 +56,8 @@
     .hover\:animation-pause:hover {
       animation-play-state: paused;
     }
+    .animate-marquee:hover {
+      animation-play-state: paused;
+  }
   }
 
