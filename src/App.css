@@ -8,3 +8,23 @@
     background: #065830;
     height: 66px;
 }
+.bg2{
+    background: #e4f9ec;
+}
+.bg3{
+    background: #74B494;
+}
+@layer utilities {
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-80%); }
+    }
+  
+    .animate-marquee {
+      animation: marquee 12s linear infinite;
+    }
+  
+    .hover\:animation-pause:hover {
+      animation-play-state: paused;
+    }
+  }
