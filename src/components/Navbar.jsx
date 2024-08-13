@@ -49,7 +49,7 @@ const Navbar = () => {
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
-  console.log(isLogin);
+
 
   return (
     <div>
@@ -269,7 +269,7 @@ const Navbar = () => {
           <></>
         )}
       </div>
-      <div className="move p-1 font-semibold">
+      <div className="move p-1   wd  font-semibold">
         <div class="animate-marquee hover:animation-pause move hover:animation-pause ">
           Insurance Ombudsman - One Stop Grievance Resolution - Click here
         </div>
@@ -302,7 +302,7 @@ const Navbar = () => {
             <div className="font-bold text-2xl text-green-900 ">
               Council for Insurance Ombudsmen
             </div>
-            <div className="text-xs">
+            <div className="text-xs text-black">
               The Offices of Insurance Ombudsman are under the administrative
               control of Council for Insurance Ombudsmen (CIO), which has been
               constituted under the Insurance Ombudsman Rules, 2017. <br />{" "}
@@ -332,13 +332,13 @@ const Navbar = () => {
             <div className="text-3xl text-green-800 mb-5  ">
               Before you submit your grievance to Insurance Ombudsman:
             </div>
-            <div className="text-xl">
+            <div className="text-xl text-green-800">
               You should have made a complaint to Insurance Company/Insurance
               Broker ○Insurance Company/Insurance Broker has failed to furnish
               reply to you within a period of one month of your complaint;{" "}
               <br />
               <span className=" flex justify-center mb-2">OR</span>
-              &nbsp; &nbsp; You are not satisfied with the response given by
+               You are not satisfied with the response given by
               Insurance Company/Insurance Broker <br /> The complaint is being
               made to the Insurance Ombudsman within one year from <br /> (a)
               Date of rejection of the complaint by the Insurance
