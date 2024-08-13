@@ -275,13 +275,13 @@ const Navbar = () => {
         </div>
       </div>
       <div className=""></div>
-      <div className="home flex    ">
-        <div className="flex">
-          <div className="flex-1 w-1/2 p-11">
+      <div className="home     ">
+        <div className="  lg:flex ">
+          <div className="flex-1  lg:w-1/2 p-11">
             <img className=" " src="./MainPgImg.jpg" alt="" />
           </div>
 
-          <div className="flex-1  ml-5 w-1/2 p-7">
+          <div className="  ml-5 lg:w-1/2 p-7">
             {" "}
             <img className=" " src="./VideoThumbnail.jpg" alt="" />
             <div className="flex items-center font-semibold justify-center  mr-10 text-blue-500">
@@ -297,8 +297,8 @@ const Navbar = () => {
           &nbsp;
           <span className="text-red-700 cursor-pointer">Click here</span>
         </div>
-        <div className="flex m-10">
-          <div className="w-1/2">
+        <div className="   flex-col flex  lg:flex-row  m-10">
+          <div className=" w-full lg:w-1/2">
             <div className="font-bold text-2xl text-green-900 ">
               Council for Insurance Ombudsmen
             </div>
@@ -317,7 +317,7 @@ const Navbar = () => {
             <div className="mt-5   font-bold text-green-800 text-3xl">
               Ways to submit/lodge the complaint
             </div>
-            <ul className="ml-2 list-disc  text-green-800 mt-4">
+            <ul className="ml-2 list-disc  text-xl  text-green-800 mt-4">
               <li>Online : click here for registering</li>
               <li>
                 Offline : a) using email, b) via post or c) walk-in to Insurance
@@ -328,13 +328,14 @@ const Navbar = () => {
             </ul>
           </div>
 
-          <div className="w-1/2 ml-10 bg2 p-2 rounded  ">
+          <div className=" w-full mt-2    lg:w-1/2 lg:ml-10 bg2 p-2 rounded  ">
             <div className="text-3xl text-green-800 mb-5  ">
               Before you submit your grievance to Insurance Ombudsman:
             </div>
             <div className="text-xl text-green-800">
               You should have made a complaint to Insurance Company/Insurance
-              Broker ○Insurance Company/Insurance Broker has failed to furnish
+              Broker.
+              <br />Insurance Company/Insurance Broker has failed to furnish
               reply to you within a period of one month of your complaint;{" "}
               <br />
               <span className=" flex justify-center mb-2">OR</span>
@@ -342,11 +343,11 @@ const Navbar = () => {
               Insurance Company/Insurance Broker <br /> The complaint is being
               made to the Insurance Ombudsman within one year from <br /> (a)
               Date of rejection of the complaint by the Insurance
-              Company/Insurance Broker <br />
+              Company/Insurance Broker. <br />
               <span className="flex items-center justify-center">OR</span>
               <br /> b) Expiry of one month of filing the complaint if the
-              Insurer fails to reply <br /> The amount of Compensation sought in
-              Insurance Ombudsman should not exceed Rs. 50 Lakhs. <br />
+              Insurer fails to reply. <br /> The amount of Compensation sought in
+              Insurance Ombudsman should not exceed Rs. 50 Lakhs. <br/>
             </div>
             <br />
             <div className="bg-white mt-2 outline-green-700 shadow-lg border-green-700 flex items-center justify-center  text-green-700 hover:bg-green-700 hover:text-white   font-bold py-1 px-2 rounded ">
