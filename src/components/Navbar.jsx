@@ -31,6 +31,7 @@ const Navbar = () => {
       userName: "",
       password: "",
     });
+  
 
     setIsLogin(true);
   };
@@ -44,6 +45,7 @@ const Navbar = () => {
     setAnchorEl2(null);
   };
   const handleClick2 = (event) => {
+    console.log(event.currentTarget)
     setAnchorEl2(event.currentTarget);
   };
 
@@ -53,31 +55,127 @@ const Navbar = () => {
 
   return (
     <div>
-      <div className="flex w-full justify-between items-center  font-semibold nav">
-        <div className="logo w-20 h-12 pl-5">
+      <div className="flex justify-around w-full   items-center  font-semibold nav">
+        <div className="logo w-20 relative  flex items-center h-12 pl-5">
           <img src="CIO_LOGO.jpg" alt="" />
         </div>
-        <div className="flex items-center justify-evenly   navlinks   ">
-          <div className="">Home</div>
-          <div className="">About us</div>
-          <div className="">Complaint Online</div>
-          <div className="">Publication</div>
-          <div className="">FAQs</div>
-          <div className="">Grivance Redressal Officiers</div>
-          <div className="">Related Links</div>
-          <div className="">RTI</div>
-        </div>
-        {isLogin ? (
-          <></>
-        ) : (
+        <div className=" text-justify hidden lg:block ">Welcome To Online Complaint mangement System</div>
+        
+        
           <>
-            <Button aria-describedby="popover2" onClick={handleClick2}>
-              <div className="bg-white p-2 hover:bg-green-700 rounded relative -right-20 text-green-600 hover:text-white">
+            {
+              isLogin ? (<></>) : (<>
+              <Button aria-describedby="popover2" onClick={handleClick2}>
+              <div className="bg-white p-2   hover:bg-green-700 font-bold rounded relative  text-green-600 hover:text-white">
                 Login
               </div>
             </Button>
+              </>)
+            }
 
-            <div className="flex justify-center">
+           {isLogin ? ( <div className="flex w-full lg:w-2/3 absolute z-10 -right-10 items-center mt-96 justify-center">
+          
+                <div className="pop mt-40 h-full flex justify-center items-center bg-gradient-to-br from-green-950 to-green-500   ">
+                  <div className="">
+                    <div className="text-right text-white m-2 font-extrabold text-2xl shadow ">
+                      {" "}
+                      Client Details
+                    </div>
+                    <table class="w-full text-white  ">
+                      <tbody>
+                      <tr class=" ">
+                          <th class=" px-4 text-left ">Complaint No.:</th>
+                          <td class=" px-4 ">XXXX</td>
+                        </tr>
+                        <tr class=" ">
+                          <th class=" px-4 text-left  ">Name:</th>
+                          <td class=" px-4">XXXX</td>
+                        </tr>
+
+                        <tr class="">
+                          <th class=" px-4 text-left ">DOB:</th>
+                          <td class=" px-4">XXXX</td>
+                        </tr>
+                        <tr class="">
+                          <th class="px-4  text-left">PAN:</th>
+                          <td class=" px-4">XXXX</td>
+                        </tr>
+                        <tr class="">
+                          <th class=" px-4 text-left ">BANK Ac:</th>
+                          <td class=" px-4">XXXX</td>
+                        </tr>
+                        <tr class="">
+                          <th class=" px-4  text-left ">IFSC:</th>
+                          <td class=" px-4">XXXX</td>
+                        </tr>
+                        <tr class="">
+                          <th class=" px-4  text-left ">Mobile No.</th>
+                          <td class=" px-4">XXXX</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div className="">
+                      <div className="text-right text-white m-2  font-extrabold text-2xl shadow ">
+                        {" "}
+                        Fund Details
+                      </div>
+                      <table class="w-full text-white  ">
+                        <tbody>
+                          <tr class=" ">
+                            <th class="py-2 px-4  text-left ">
+                              Invested in Mutual Fund:
+                            </th>
+                            <td class="py-2   px-4">XXXX</td>
+                          </tr>
+
+                          <tr class="">
+                            <th class=" px-4 text-left  ">
+                              Invested in Equity Fund:
+                            </th>
+                            <td class="px-4">XXXX</td>
+                          </tr>
+                          <tr class="">
+                            <th class=" px-4 text-left ">
+                              Consolidated Fund value:
+                            </th>
+                            <td class=" px-4">XXXX</td>
+                          </tr>
+                          <tr class="">
+                            <th class="px-4  text-left">
+                              Commision Due:
+                            </th>
+                            <td class="px-4">XXXX</td>
+                          </tr>
+                          <tr class="">
+                            <th class=" px-4 text-left ">
+                              Commission Realised:
+                            </th>
+                            <td class=" px-4">XXXX</td>
+                          </tr>
+                          <tr class="">
+                            <th class="py-2 px-4 text-left">
+                              Assigned officer Name:
+                            </th>
+                            <td class="py-2 px-4">XXXX</td>
+                          </tr>
+                          <tr class="">
+                            <th class=" px-4 text-left  ">
+                              Assigned Officer Mobile:
+                            </th>
+                            <td class=" px-4">XXXX</td>
+                          </tr>
+                          <tr class="">
+                            <th class="py-2 px-4 text-left ">Status:</th>
+                            <td class="py-2 px-4">XXXX</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+            
+            
+            </div>) :( <div className="flex justify-center">
               <Popover
                 id="popover2"
                 open={open2}
@@ -135,7 +233,7 @@ const Navbar = () => {
                             }
                           />
                         </div>
-                        <div className="text-center mt-10 flex justify-center items-center bg-green-300 text-green-700 p-2 rounded hover:bg-green-700 inline-block hover:cursor-pointer hover:text-white">
+                        <div className="text-center mt-10 justify-center items-center bg-green-300 text-green-700 p-2 rounded hover:bg-green-700 inline-block hover:cursor-pointer hover:text-white">
                           <button type="submit" className="w-20">
                             Submit
                           </button>
@@ -145,133 +243,14 @@ const Navbar = () => {
                   </div>
                 </div>
               </Popover>
-            </div>
+            </div>)}
           </>
-        )}
+        
 
-        {isLogin ? (
-          <>
-            <Button aria-describedby={id} onClick={handleClick}>
-              <div className="bg-white p-2 hover:bg-green-700 rounded  text-green-600 hover:text-white">
-                Show
-              </div>
-            </Button>
-
-            <div className="flex justify-center">
-              <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "center",
-                }}
-              >
-                <div className="pop h-full flex justify-center items-center bg-gradient-to-br from-green-950 to-green-500   ">
-                  <div className="">
-                    <div className="text-right text-white m-2 font-extrabold text-2xl shadow ">
-                      {" "}
-                      Client Details
-                    </div>
-                    <table class="w-full text-white  text-left">
-                      <tbody>
-                        <tr class=" ">
-                          <th class=" px-4 absolute left-20 ">Name:</th>
-                          <td class=" px-4">XXXX</td>
-                        </tr>
-
-                        <tr class="">
-                          <th class=" px-4 absolute left-20 ">DOB:</th>
-                          <td class=" px-4">XXXX</td>
-                        </tr>
-                        <tr class="">
-                          <th class="px-4 absolute left-20 ">PAN:</th>
-                          <td class=" px-4">XXXX</td>
-                        </tr>
-                        <tr class="">
-                          <th class=" px-4 absolute left-20">BANK Ac:</th>
-                          <td class=" px-4">XXXX</td>
-                        </tr>
-                        <tr class="">
-                          <th class=" px-4 absolute left-20 ">IFSC:</th>
-                          <td class=" px-4">XXXX</td>
-                        </tr>
-                        <tr class="">
-                          <th class=" px-4 absolute left-20 ">Mobile No.</th>
-                          <td class=" px-4">XXXX</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <div className="">
-                      <div className="text-right text-white m-2  font-extrabold text-2xl shadow ">
-                        {" "}
-                        Fund Details
-                      </div>
-                      <table class="w-full text-white  text-left">
-                        <tbody>
-                          <tr class=" ">
-                            <th class="py-2 px-4 absolute left-20 ">
-                              Invested in Mutual Fund:
-                            </th>
-                            <td class="py-2 px-4">XXXX</td>
-                          </tr>
-
-                          <tr class="">
-                            <th class=" px-4 absolute left-20 ">
-                              Invested in Equity Fund:
-                            </th>
-                            <td class="px-4">XXXX</td>
-                          </tr>
-                          <tr class="">
-                            <th class=" px-4 absolute left-20 ">
-                              Consolidated Fund value:
-                            </th>
-                            <td class=" px-4">XXXX</td>
-                          </tr>
-                          <tr class="">
-                            <th class="px-4 absolute left-20">
-                              Commision Due:
-                            </th>
-                            <td class="px-4">XXXX</td>
-                          </tr>
-                          <tr class="">
-                            <th class=" px-4 absolute left-20 ">
-                              Commission Realised:
-                            </th>
-                            <td class=" px-4">XXXX</td>
-                          </tr>
-                          <tr class="">
-                            <th class="py-2 px-4 absolute left-20 ">
-                              Assigned officer Name:
-                            </th>
-                            <td class="py-2 px-4">XXXX</td>
-                          </tr>
-                          <tr class="">
-                            <th class=" px-4 absolute left-20 ">
-                              Assigned Officer Mobile:
-                            </th>
-                            <td class=" px-4">XXXX</td>
-                          </tr>
-                          <tr class="">
-                            <th class="py-2 px-4 absolute left-20 ">Status</th>
-                            <td class="py-2 px-4">XXXX</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </Popover>
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
       </div>
       <div className="move p-1   wd  font-semibold">
-        <div class="animate-marquee hover:animation-pause move hover:animation-pause ">
-          Insurance Ombudsman - One Stop Grievance Resolution - Click here
+        <div class="animate-marquee hover:animation-pause move hover:animation-pause whitespace-nowrap ">
+          Insurance Ombudsman - One Stop Grievance Resolution 
         </div>
       </div>
       <div className=""></div>
@@ -292,17 +271,13 @@ const Navbar = () => {
       </div>
 
       <div className="text-blue-600  text-2xl m-3">
-        <div className="text-blue-600 font-bold ml-10 text-3xl m-3">
-          Advertisement For Hiring Of Office Premises At Thane On Lease Basis
-          &nbsp;
-          <span className="text-red-700 cursor-pointer">Click here</span>
-        </div>
-        <div className="   flex-col flex  lg:flex-row  m-10">
+       
+        <div className="   flex   lg:flex-row  m-10">
           <div className=" w-full lg:w-1/2">
             <div className="font-bold text-2xl text-green-900 ">
               Council for Insurance Ombudsmen
             </div>
-            <div className="text-xs text-black">
+            <div className="text-sm text-black">
               The Offices of Insurance Ombudsman are under the administrative
               control of Council for Insurance Ombudsmen (CIO), which has been
               constituted under the Insurance Ombudsman Rules, 2017. <br />{" "}
@@ -314,52 +289,16 @@ const Navbar = () => {
               manner
             </div>
 
-            <div className="mt-5   font-bold text-green-800 text-3xl">
-              Ways to submit/lodge the complaint
-            </div>
-            <ul className="ml-2 list-disc  text-xl  text-green-800 mt-4">
-              <li>Online : click here for registering</li>
-              <li>
-                Offline : a) using email, b) via post or c) walk-in to Insurance
-                Ombudsman Office (click here for details) of centres, email id,
-                address and jurisdiction.
-              </li>
-              <li> For tracking your complaint click here</li>
-            </ul>
+            
           </div>
 
-          <div className=" w-full mt-2    lg:w-1/2 lg:ml-10 bg2 p-2 rounded  ">
-            <div className="text-3xl text-green-800 mb-5  ">
-              Before you submit your grievance to Insurance Ombudsman:
-            </div>
-            <div className="text-xl text-green-800">
-              You should have made a complaint to Insurance Company/Insurance
-              Broker.
-              <br />Insurance Company/Insurance Broker has failed to furnish
-              reply to you within a period of one month of your complaint;{" "}
-              <br />
-              <span className=" flex justify-center mb-2">OR</span>
-               You are not satisfied with the response given by
-              Insurance Company/Insurance Broker <br /> The complaint is being
-              made to the Insurance Ombudsman within one year from <br /> (a)
-              Date of rejection of the complaint by the Insurance
-              Company/Insurance Broker. <br />
-              <span className="flex items-center justify-center">OR</span>
-              <br /> b) Expiry of one month of filing the complaint if the
-              Insurer fails to reply. <br /> The amount of Compensation sought in
-              Insurance Ombudsman should not exceed Rs. 50 Lakhs. <br/>
-            </div>
-            <br />
-            <div className="bg-white mt-2 outline-green-700 shadow-lg border-green-700 flex items-center justify-center  text-green-700 hover:bg-green-700 hover:text-white   font-bold py-1 px-2 rounded ">
-              OK, REGISTER MY COMPLAINT
-            </div>
-          </div>
+          
         </div>
 
         {/* //footer */}
-        <div className="-ml-10">
+        <div className="-ml-10 text-xl mb-10 lg:mb-0 ">
           <div className="bg-green-800  pl-14 pr-14 pt-6 ">
-            <div className="flex justify-evenly items-center underline   text-white">
+            <div className=" text-center lg:flex lg:justify-evenly items-center underline text-xl  text-white">
               <div className="">Archives</div>
               <div className="">Download</div>
               <div className="">Carrers</div>

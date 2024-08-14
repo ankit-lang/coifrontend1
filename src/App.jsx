@@ -1,22 +1,22 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-import './App.css'
+import "./App.css";
 
-import { Button } from './components/ui/button'
-
-import Navbar from './components/Navbar'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Admin from "./components/Admin";
 
 function App() {
- 
-
   return (
     <>
-<Navbar/>
-
- 
-     
+      <BrowserRouter>
+        <Routes>
+        <Route path="/" element={<Navbar />} />
+        <Route path="/admin" element={<Admin/>}/>
+        </Routes>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
