@@ -1,10 +1,19 @@
+import { Popover } from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Admin = () => {
+  const user = "admin";
+  const pass = "admin";
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [err, setErr] = useState("");
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
-   Complaintno:"",
+    Complaintno: "",
 
     DOB: "",
     pan: "",
@@ -13,12 +22,39 @@ const Admin = () => {
     phone: "",
   });
 
+  useEffect(() => {
+    const storedLoginStatus = localStorage.getItem("isLoggedIn");
+    if (storedLoginStatus === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
-  
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // Mock authentication logic
+    if (username === "admin" && password === "admin") {
+      setIsLoggedIn(true);
+      localStorage.setItem("isLoggedIn", "true");
+      setErr("");
+    } else {
+      setErr("Invalid username or password");
+    }
+  };
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.setItem("isLoggedIn", "false");
+    setUsername("");
+    setPassword("");
+  };
+
   const [errors, setErrors] = useState({});
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+  const handleChange2 = (e) => {
+    const { name, value } = e.target;
+    setSavedData((prevData) => ({ ...prevData, [name]: value }));
   };
   const validateForm = () => {
     let tempErrors = {};
@@ -28,40 +64,92 @@ const Admin = () => {
       tempErrors.name = " name is required";
       isValid = false;
     }
-    
+
     if (!formData.DOB) {
       tempErrors.email = " is required";
       isValid = false;
-    } 
+    }
 
     setErrors(tempErrors);
     return isValid;
   };
-  const handleFetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/form-data');
-      setSavedData(response.data.textData);
-    } catch (error) {
-      alert('Failed to fetch data');
-    }
-  };
-  const handleSubmit =async (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormData({
+      name: "",
+      Complaintno: "",
+
+      DOB: "",
+      pan: "",
+      account: "",
+      ifsc: "",
+      phone: "",
+    });
     try {
-      await axios.post('http://localhost:5000/save', { formData });
-      console.log("first")
-      alert('Data submitted successfully');
-      
-    console.log("Form submitted", formData);
+      const res = await axios.post("http://localhost:5000/save", { formData });
+
+      console.log("object");
+      alert("Data submitted successfully");
+      console.log("Form submitted", formData);
     } catch (error) {
-      // alert('Failed to submit data');
-      console.log(error.message)
-    }
-    if (validateForm()) {
-   
- 
+      console.log(error);
     }
   };
+  const handleSubmit2 = async (e) => {
+    e.preventDefault();
+    setSavedData({
+      name: "",
+      Complaintno: "",
+
+      DOB: "",
+      pan: "",
+      account: "",
+      ifsc: "",
+      phone: "",
+    });
+    try {
+      const res = await axios.post("http://localhost:5000/client/edit", { savedData });
+
+    
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [anchorEl2, setAnchorEl2] = useState(null);
+  const [savedData, setSavedData] = useState({});
+  const [isEdit, setIsEdit] = useState(false);
+  const [myinput, setmyInput] = useState({
+    phone: "",
+    password: "",
+  });
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+  const open2 = Boolean(anchorEl2);
+  const handleClose2 = () => {
+    setAnchorEl2(null);
+  };
+  const handleFetchData = async () => {
+    const response = await axios.get(
+      `http://localhost:5000/data/${myinput.phone}`
+    );
+    setSavedData(response.data);
+   
+  };
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    await handleFetchData();
+    setIsEdit(true);
+    setmyInput({
+      phone: "",
+      password: "",
+    });
+  };
+ 
+
   return (
     <div>
       <div className="flex justify-around w-full   items-center  font-semibold nav">
@@ -71,6 +159,296 @@ const Admin = () => {
         <div className=" text-justify  hidden lg:block ">
           Welcome To Online Complaint mangement System
         </div>
+        {isLoggedIn ? (
+          <>
+            <div className="">
+              <div className="">
+                <button
+                  onClick={handleLogout}
+                  className="text-green-800 bg-white hover:text-white hover:bg-green-600 p-2 rounded  font-bold "
+                >
+                  ADMIN-LOGOUT{" "}
+                </button>
+                {isEdit ? (
+                  <>
+                  <div className="z-20 absolute  right-20 w-1/2 ">
+                  <form
+              onSubmit={handleSubmit2}
+              className="bg-gradient-to-br   from-green-950 to-green-500   flex-col justify-center p-10 rounded shadow-lg items-center"
+            >
+              <fieldset className=" text-white  ">
+                <legend className="text-center text-white font-bold text-2xl mb-2">
+                  EDIT   Client Information
+                </legend>
+                <div className="form-group m-2  justify-between items-center  flex">
+                  <div className="">
+                    {" "}
+                    <label htmlFor="Complaintno " className="whitespace-nowrap">
+                      {" "}
+                      Complaint NO:
+                    </label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      className="rounded p-1 text-black w-full "
+                      id="Complaintno"
+                      name="Complaintno"
+            
+                      value={savedData.Complaintno}
+                      onChange={handleChange2}
+                    />
+                  </div>
+
+                  {errors.Compalintno && (
+                    <p className="error">{errors.Complaintno}</p>
+                  )}
+                </div>
+                <div className="form-group m-2 flex justify-between items-center ">
+                  <div className="">
+                    <label htmlFor="name"> Name:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                     
+                      className="rounded p-1 text-black "
+                      value={savedData.name}
+                      onChange={handleChange2}
+                    />
+                  </div>
+                  {errors.name && <p className="error">{errors.name}</p>}
+                </div>
+
+                <div className="form-group m-2 flex justify-between">
+                  <div className="">
+                    {" "}
+                    <label htmlFor="DOB">DOB:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      className="rounded p-1 text-black"
+                      id="DOV"
+               
+                      name="DOB"
+                      value={savedData.DOB}
+                      onChange={handleChange2}
+                    />
+                  </div>
+                  {errors.DOB && <p className="error">{errors.DOB}</p>}
+                </div>
+
+                <div className="form-group flex justify-between m-2">
+                  <div className="">
+                    <label htmlFor="pan">Pan:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      id="pan"
+                  
+                      className="rounded p-1 text-black"
+                      name="pan"
+                      value={savedData.pan}
+                      onChange={handleChange2}
+                    />
+                  </div>
+                  {errors.pan && <p className="error">{errors.pan}</p>}
+                </div>
+                <div className="form-group m-2 flex justify-between">
+                  <div className="">
+                    {" "}
+                    <label htmlFor="account">Account No:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      id="account"
+                 
+                      className="rounded p-1 text-black"
+                      name="account"
+                      value={savedData.account}
+                      onChange={handleChange2}
+                    />
+                  </div>
+                  {errors.account && <p className="error">{errors.account}</p>}
+                </div>
+                <div className="form-group flex justify-between m-2 ">
+                  <div className="">
+                    {" "}
+                    <label htmlFor="ifsc">IFSC:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      id="ifsc"
+
+                      className="rounded p-1 text-black "
+                      name="ifsc"
+                      value={savedData.ifsc}
+                      onChange={handleChange2}
+                    />
+                  </div>
+                  {errors.ifsc && <p className="error">{errors.ifsc}</p>}
+                </div>
+
+                <div className="form-group flex justify-between m-2">
+                  <div className="">
+                    <label htmlFor="phone">Phone:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="tel"
+                      className="rounded p-1 text-black"
+                      id="phone"
+                      name="phone"
+                      value={savedData.phone}
+                      onChange={handleChange2}
+                    />
+                  </div>
+                  {errors.phone && <p className="error">{errors.phone}</p>}
+                </div>
+              </fieldset>
+              <div className="flex justify-center mt-2">
+                {" "}
+                <button
+                  type="submit"
+                  className="text-green-700 w-48 flex items-center justify-center bg-white hover:bg-green-700 rounded-2xl text-center p-2 mt-2 font-bold  hover:text-white"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+                  </div>
+                  </>
+                ) : (
+                  <>
+                    <Popover
+                      id="popover2"
+                      open={open2}
+                      anchorEl={anchorEl2}
+                      onClose={handleClose2}
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "center",
+                      }}
+                    >
+                      <div className="pop h-full  rounded flex justify-center items-center bg-gradient-to-br from-green-950 to-green-500   ">
+                        <div className=" m-5 rounded">
+                          <div className=" text-center mt-5 mb-5 text-white m-2 font-extrabold text-2xl shadow ">
+                            {" "}
+                            ENTER CLIENT DETAILS
+                          </div>
+
+                          <div className="">
+                            <form
+                              className="flex-col justify-center items-center"
+                              onSubmit={submitHandler}
+                            >
+                              <div className="mt-10 flex-col justify-center text-center items-center ">
+                                <div className="">
+                                  {" "}
+                                  <span className="text-white">
+                                    {" "}
+                                    Phone no:{" "}
+                                  </span>{" "}
+                                  &nbsp;
+                                </div>
+                                &nbsp;
+                                <div className="">
+                                  <input
+                                    className="rounded p-2 bg-green-200 "
+                                    type="text"
+                                    name="phone"
+                                    value={myinput.phone}
+                                    placeholder="Enter Your Phone no"
+                                    onChange={(e) =>
+                                      setmyInput({
+                                        ...myinput,
+                                        phone: e.target.value,
+                                      })
+                                    }
+                                  />
+                                </div>
+                                <div className="text-center mt-10 justify-center items-center bg-green-300 text-green-700 p-2 rounded hover:bg-green-700 inline-block hover:cursor-pointer hover:text-white">
+                                  <button type="submit" className="w-20">
+                                    Submit
+                                  </button>
+                                </div>
+                              </div>
+                              <br />{" "}
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </Popover>
+                  </>
+                )}
+              </div>
+            </div>
+            <div className="">
+              <div className="">
+                <button
+                  aria-describedby="popover2"
+                  onClick={handleClick2}
+                  className="text-green-800 bg-white hover:text-white hover:bg-green-600 p-2 rounded  font-bold "
+                >
+                  EDIT-CLIENT{" "}
+                </button>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <form
+              onSubmit={handleLogin}
+              className="bg-white p-6 rounded shadow-md  z-10 mt-96 w-1/2 flex absolute justify-center items-center text-black"
+            >
+              <div className="">
+                <h2 className="text-2xl mb-4 text-center font-bold">Login</h2>
+                {err && <p className="text-red-500 mb-2">{err}</p>}
+                <div className="mb-4">
+                  Username:
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="w-full p-2 border rounded font-light"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label className="block mb-2 text-sm font-bold">
+                    Password:
+                  </label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full p-2 border rounded font-light"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-green-500 hover:bg-green-700 text-white p-2 rounded"
+                >
+                  Login
+                </button>
+              </div>
+            </form>
+          </>
+        )}
       </div>
       <div className="move p-1   wd  font-semibold">
         <div class="animate-marquee hover:animation-pause move hover:animation-pause whitespace-nowrap ">
@@ -79,155 +457,166 @@ const Admin = () => {
       </div>
 
       {/* //form  */}
-      <h2 className="text-center text-3xl font-bold">Admin DashBoard</h2>
-      <div className="flex items-center  justify-center text ">
-        <form
-          onSubmit={handleSubmit}
-          className="bg-gradient-to-br from-green-950 to-green-500  w-3/5 flex-col justify-center p-10 rounded shadow-lg items-center"
-        >
-          <fieldset className=" text-white  ">
-            <legend className="text-center text-white font-bold text-2xl mb-2">
-              Client Information
-            </legend>
-            <div className="form-group m-2  justify-between items-center  flex">
-              <div className="">
-                {" "}
-                <label htmlFor="Complaintno " className="whitespace-nowrap">
-                  {" "}
-                  Complaint NO:
-                </label>
-              </div>
-              <div className="">
-                {" "}
-                <input
-                  type="text"
-                  className="rounded p-1 text-black "
-                  id="Complaintno"
-                  name="Complaintno"
-                  value={formData.Complaintno}
-                  onChange={handleChange}
-                />
-              </div>
+      {isLoggedIn ? (
+        <>
+          <h2 className="text-center text-3xl font-bold">Admin DashBoard</h2>
+          <div className="flex items-center  justify-center text ">
+            <form
+              onSubmit={handleSubmit}
+              className="bg-gradient-to-br from-green-950 to-green-500  w-3/5 flex-col justify-center p-10 rounded shadow-lg items-center"
+            >
+              <fieldset className=" text-white  ">
+                <legend className="text-center text-white font-bold text-2xl mb-2">
+                  Client Information
+                </legend>
+                <div className="form-group m-2  justify-between items-center  flex">
+                  <div className="">
+                    {" "}
+                    <label htmlFor="Complaintno " className="whitespace-nowrap">
+                      {" "}
+                      Complaint NO:
+                    </label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      className="rounded p-1 text-black w-full "
+                      id="Complaintno"
+                      name="Complaintno"
+                      value={formData.Complaintno}
+                      onChange={handleChange}
+                    />
+                  </div>
 
-              {errors.Compalintno && (
-                <p className="error">{errors.Complaintno}</p>
-              )}
-            </div>
-            <div className="form-group m-2 flex justify-between items-center ">
-              <div className="">
-                <label htmlFor="firstName"> Name:</label>
-              </div>
-              <div className="">
-                {" "}
-                <input
-                  type="text"
-                  id="firstName"
-                  name="firstName"
-                  className="rounded p-1 text-black "
-                  value={formData.firstName}
-                  onChange={handleChange}
-                />
-              </div>
-              {errors.firstName && <p className="error">{errors.firstName}</p>}
-            </div>
+                  {errors.Compalintno && (
+                    <p className="error">{errors.Complaintno}</p>
+                  )}
+                </div>
+                <div className="form-group m-2 flex justify-between items-center ">
+                  <div className="">
+                    <label htmlFor="name"> Name:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      className="rounded p-1 text-black "
+                      value={formData.name}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.name && <p className="error">{errors.name}</p>}
+                </div>
 
-            <div className="form-group m-2 flex justify-between">
-              <div className="">
-                {" "}
-                <label htmlFor="DOB">DOB:</label>
-              </div>
-              <div className="">
-                {" "}
-                <input
-                  type="text"
-                  className="rounded p-1 text-black"
-                  id="DOV"
-                  name="DOB"
-                  value={formData.DOB}
-                  onChange={handleChange}
-                />
-              </div>
-              {errors.DOB && <p className="error">{errors.DOB}</p>}
-            </div>
+                <div className="form-group m-2 flex justify-between">
+                  <div className="">
+                    {" "}
+                    <label htmlFor="DOB">DOB:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      className="rounded p-1 text-black"
+                      id="DOV"
+                      name="DOB"
+                      value={formData.DOB}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.DOB && <p className="error">{errors.DOB}</p>}
+                </div>
 
-            <div className="form-group flex justify-between m-2">
-              <div className="">
-                <label htmlFor="pan">Pan:</label>
-              </div>
-              <div className="">
+                <div className="form-group flex justify-between m-2">
+                  <div className="">
+                    <label htmlFor="pan">Pan:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      id="pan"
+                      className="rounded p-1 text-black"
+                      name="pan"
+                      value={formData.pan}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.pan && <p className="error">{errors.pan}</p>}
+                </div>
+                <div className="form-group m-2 flex justify-between">
+                  <div className="">
+                    {" "}
+                    <label htmlFor="account">Account No:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      id="account"
+                      className="rounded p-1 text-black"
+                      name="account"
+                      value={formData.account}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.account && <p className="error">{errors.account}</p>}
+                </div>
+                <div className="form-group flex justify-between m-2 ">
+                  <div className="">
+                    {" "}
+                    <label htmlFor="ifsc">IFSC:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      id="ifsc"
+                      className="rounded p-1 text-black "
+                      name="ifsc"
+                      value={formData.ifsc}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.ifsc && <p className="error">{errors.ifsc}</p>}
+                </div>
+
+                <div className="form-group flex justify-between m-2">
+                  <div className="">
+                    <label htmlFor="phone">Phone:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="tel"
+                      className="rounded p-1 text-black"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.phone && <p className="error">{errors.phone}</p>}
+                </div>
+              </fieldset>
+              <div className="flex justify-center mt-2">
                 {" "}
-                <input
-                  type="text"
-                  id="pan"
-                  className="rounded p-1 text-black"
-                  name="pan"
-                  value={formData.pan}
-                  onChange={handleChange}
-                />
+                <button
+                  type="submit"
+                  className="text-green-700 w-48 flex items-center justify-center bg-white hover:bg-green-700 rounded-2xl text-center p-2 mt-2 font-bold  hover:text-white"
+                >
+                  Submit
+                </button>
               </div>
-              {errors.pan && <p className="error">{errors.pan}</p>}
-            </div>
-            <div className="form-group m-2 flex justify-between">
-              <div className="">
-                {" "}
-                <label htmlFor="account">Account No:</label>
-              </div>
-              <div className="">
-                {" "}
-                <input
-                  type="text"
-                  id="account"
-                  className="rounded p-1 text-black"
-                  name="account"
-                  value={formData.account}
-                  onChange={handleChange}
-                />
-              </div>
-              {errors.account && <p className="error">{errors.account}</p>}
-            </div>
-            <div className="form-group flex justify-between m-2 ">
-              <div className="">
-                {" "}
-                <label htmlFor="ifsc">IFSC:</label>
-              </div>
-              <div className="">
-                {" "}
-                <input
-                  type="text"
-                  id="ifsc"
-                  className="rounded p-1 text-black "
-                  name="ifsc"
-                  value={formData.ifsc}
-                  onChange={handleChange}
-                />
-              </div>
-              {errors.ifsc && <p className="error">{errors.ifsc}</p>}
-            </div>
-           
-            <div className="form-group flex justify-between m-2">
-              <div className="">
-                <label htmlFor="phone">Phone:</label>
-              </div>
-              <div className="">
-                {" "}
-                <input
-                  type="tel"
-                  className="rounded p-1 text-black"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                />
-              </div>
-              {errors.phone && <p className="error">{errors.phone}</p>}
-            </div>
-          </fieldset>
-          <div className="text-green-700 bg-white hover:bg-green-700 rounded-2xl text-center p-2 mt-2 font-bold  hover:text-white">
-            {" "}
-            <button type="submit" className="" >Submit</button>
+            </form>
           </div>
-        </form>
-      </div>
+        </>
+      ) : (
+        <></>
+      )}
 
       <div className=""></div>
       <div className="home     ">

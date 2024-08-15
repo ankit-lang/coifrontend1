@@ -7,15 +7,49 @@ import { Input } from "@mui/material";
 
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isLogin, setIsLogin] = useState(false);
   const [anchorEl2, setAnchorEl2] = useState(null);
+  const [loggedInData, setLoggedInData] = useState({});
   const [myinput, setmyInput] = useState({
-    userName: "",
+    phone: "",
     password: "",
   });
+  const [savedData, setSavedData] = useState(
+    JSON.parse(localStorage.getItem("client"))
+  );
+  const handleFetchData = async () => {
+    const response = await axios.get(
+      `http://localhost:5000/data/${myinput.phone}`
+    );
+    if (JSON.stringify(response.data)) {
+      localStorage.setItem("client", JSON.stringify(response.data));
+
+      setSavedData(response.data);
+    }
+  };
+
+  useEffect(() => {
+    const storedLoginStatus = localStorage.getItem("client");
+    if (storedLoginStatus) {
+    
+      setIsLogin(true);
+    }
+  }, []);
+
+
+  useEffect(() => {
+    if(savedData){
+      if (myinput.phone == savedData.phone) {
+        setLoggedInData(savedData);
+        localStorage.setItem("data", savedData);
+      }
+    }
+    
+  }, [savedData, myinput.phone, myinput.password]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -24,14 +58,14 @@ const Navbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const submitHandler = (e) => {
-    console.log("sec");
+  const submitHandler = async (e) => {
     e.preventDefault();
+
+    await handleFetchData();
     setmyInput({
-      userName: "",
+      phone: "",
       password: "",
     });
-  
 
     setIsLogin(true);
   };
@@ -45,13 +79,11 @@ const Navbar = () => {
     setAnchorEl2(null);
   };
   const handleClick2 = (event) => {
-    console.log(event.currentTarget)
     setAnchorEl2(event.currentTarget);
   };
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
-
 
   return (
     <div>
@@ -59,123 +91,122 @@ const Navbar = () => {
         <div className="logo w-20 relative  flex items-center h-12 pl-5">
           <img src="CIO_LOGO.jpg" alt="" />
         </div>
-        <div className=" text-justify hidden lg:block ">Welcome To Online Complaint mangement System</div>
-        
-        
-          <>
-            {
-              isLogin ? (<></>) : (<>
-              <Button aria-describedby="popover2" onClick={handleClick2}>
-              <div className="bg-white p-2   hover:bg-green-700 font-bold rounded relative  text-green-600 hover:text-white">
-                Login
-              </div>
-            </Button>
-              </>)
-            }
+        <div className=" text-justify hidden lg:block ">
+          Welcome To Online Complaint mangement System
+        </div>
 
-           {isLogin ? ( <div className="flex w-full lg:w-2/3 absolute z-10 -right-10 items-center mt-96 justify-center">
-          
-                <div className="pop mt-40 h-full flex justify-center items-center bg-gradient-to-br from-green-950 to-green-500   ">
+        <>
+          {isLogin ? (
+            <></>
+          ) : (
+            <>
+              <Button aria-describedby="popover2" onClick={handleClick2}>
+                <div className="bg-white p-2   hover:bg-green-700 font-bold rounded relative  text-green-600 hover:text-white">
+                  Login
+                </div>
+              </Button>
+            </>
+          )}
+
+          {isLogin ? (
+            <div className="flex w-full lg:w-2/3 absolute z-10 -right-10 items-center mt-96 justify-center">
+              <div className="pop mt-40 h-full flex justify-center items-center bg-gradient-to-br from-green-950 to-green-500   ">
+                <div className="">
+                  <div className="text-right text-white m-2 font-extrabold text-2xl shadow ">
+                    {" "}
+                    Client Details
+                  </div>
+                  <table class="w-full text-white  ">
+                    <tbody>
+                      <tr class=" ">
+                        <th class=" px-4 text-left ">Complaint No.:</th>
+                        <td class=" px-4 ">   {savedData.name}</td>
+                      </tr>
+                      <tr class=" ">
+                        <th class=" px-4 text-left  ">Name:</th>
+                        <td class=" px-4">{savedData.name}</td>
+                      </tr>
+
+                      <tr class="">
+                        <th class=" px-4 text-left ">DOB:</th>
+                        <td class=" px-4">{savedData.DOB}</td>
+                      </tr>
+                      <tr class="">
+                        <th class="px-4  text-left">PAN:</th>
+                        <td class=" px-4">{savedData.pan}</td>
+                      </tr>
+                      <tr class="">
+                        <th class=" px-4 text-left ">BANK Ac:</th>
+                        <td class=" px-4">{savedData.account}</td>
+                      </tr>
+                      <tr class="">
+                        <th class=" px-4  text-left ">IFSC:</th>
+                        <td class=" px-4">{savedData.ifsc}</td>
+                      </tr>
+                      <tr class="">
+                        <th class=" px-4  text-left ">Mobile No.</th>
+                        <td class=" px-4">{savedData.phone}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                   <div className="">
-                    <div className="text-right text-white m-2 font-extrabold text-2xl shadow ">
+                    <div className="text-right text-white m-2  font-extrabold text-2xl shadow ">
                       {" "}
-                      Client Details
+                      Fund Details
                     </div>
                     <table class="w-full text-white  ">
                       <tbody>
-                      <tr class=" ">
-                          <th class=" px-4 text-left ">Complaint No.:</th>
-                          <td class=" px-4 ">XXXX</td>
-                        </tr>
                         <tr class=" ">
-                          <th class=" px-4 text-left  ">Name:</th>
-                          <td class=" px-4">XXXX</td>
+                          <th class="py-2 px-4  text-left ">
+                            Invested in Mutual Fund:
+                          </th>
+                          <td class="py-2   px-4">XXXX</td>
                         </tr>
 
                         <tr class="">
-                          <th class=" px-4 text-left ">DOB:</th>
+                          <th class=" px-4 text-left  ">
+                            Invested in Equity Fund:
+                          </th>
+                          <td class="px-4">XXXX</td>
+                        </tr>
+                        <tr class="">
+                          <th class=" px-4 text-left ">
+                            Consolidated Fund value:
+                          </th>
                           <td class=" px-4">XXXX</td>
                         </tr>
                         <tr class="">
-                          <th class="px-4  text-left">PAN:</th>
+                          <th class="px-4  text-left">Commision Due:</th>
+                          <td class="px-4">XXXX</td>
+                        </tr>
+                        <tr class="">
+                          <th class=" px-4 text-left ">Commission Realised:</th>
                           <td class=" px-4">XXXX</td>
                         </tr>
                         <tr class="">
-                          <th class=" px-4 text-left ">BANK Ac:</th>
+                          <th class="py-2 px-4 text-left">
+                            Assigned officer Name:
+                          </th>
+                          <td class="py-2 px-4">XXXX</td>
+                        </tr>
+                        <tr class="">
+                          <th class=" px-4 text-left  ">
+                            Assigned Officer Mobile:
+                          </th>
                           <td class=" px-4">XXXX</td>
                         </tr>
                         <tr class="">
-                          <th class=" px-4  text-left ">IFSC:</th>
-                          <td class=" px-4">XXXX</td>
-                        </tr>
-                        <tr class="">
-                          <th class=" px-4  text-left ">Mobile No.</th>
-                          <td class=" px-4">XXXX</td>
+                          <th class="py-2 px-4 text-left ">Status:</th>
+                          <td class="py-2 px-4">XXXX</td>
                         </tr>
                       </tbody>
                     </table>
-                    <div className="">
-                      <div className="text-right text-white m-2  font-extrabold text-2xl shadow ">
-                        {" "}
-                        Fund Details
-                      </div>
-                      <table class="w-full text-white  ">
-                        <tbody>
-                          <tr class=" ">
-                            <th class="py-2 px-4  text-left ">
-                              Invested in Mutual Fund:
-                            </th>
-                            <td class="py-2   px-4">XXXX</td>
-                          </tr>
-
-                          <tr class="">
-                            <th class=" px-4 text-left  ">
-                              Invested in Equity Fund:
-                            </th>
-                            <td class="px-4">XXXX</td>
-                          </tr>
-                          <tr class="">
-                            <th class=" px-4 text-left ">
-                              Consolidated Fund value:
-                            </th>
-                            <td class=" px-4">XXXX</td>
-                          </tr>
-                          <tr class="">
-                            <th class="px-4  text-left">
-                              Commision Due:
-                            </th>
-                            <td class="px-4">XXXX</td>
-                          </tr>
-                          <tr class="">
-                            <th class=" px-4 text-left ">
-                              Commission Realised:
-                            </th>
-                            <td class=" px-4">XXXX</td>
-                          </tr>
-                          <tr class="">
-                            <th class="py-2 px-4 text-left">
-                              Assigned officer Name:
-                            </th>
-                            <td class="py-2 px-4">XXXX</td>
-                          </tr>
-                          <tr class="">
-                            <th class=" px-4 text-left  ">
-                              Assigned Officer Mobile:
-                            </th>
-                            <td class=" px-4">XXXX</td>
-                          </tr>
-                          <tr class="">
-                            <th class="py-2 px-4 text-left ">Status:</th>
-                            <td class="py-2 px-4">XXXX</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
                   </div>
                 </div>
-            
-            
-            </div>) :( <div className="flex justify-center">
+              </div>
+            </div>
+          ) : (
+            <div className="flex justify-center">
               <Popover
                 id="popover2"
                 open={open2}
@@ -199,18 +230,18 @@ const Navbar = () => {
                         onSubmit={submitHandler}
                       >
                         <div className="mt-10 flex items-center ">
-                          <span className="text-white"> Username: </span> &nbsp;
+                          <span className="text-white"> Phone no: </span> &nbsp;
                           &nbsp;
                           <input
                             className="rounded p-2 bg-green-200 "
                             type="text"
-                            name="userName"
-                            value={myinput.userName}
-                            placeholder="Enter Your Username"
+                            name="phone"
+                            value={myinput.phone}
+                            placeholder="Enter Your Phone no"
                             onChange={(e) =>
                               setmyInput({
                                 ...myinput,
-                                userName: e.target.value,
+                                phone: e.target.value,
                               })
                             }
                           />
@@ -243,14 +274,13 @@ const Navbar = () => {
                   </div>
                 </div>
               </Popover>
-            </div>)}
-          </>
-        
-
+            </div>
+          )}
+        </>
       </div>
       <div className="move p-1   wd  font-semibold">
         <div class="animate-marquee hover:animation-pause move hover:animation-pause whitespace-nowrap ">
-          Insurance Ombudsman - One Stop Grievance Resolution 
+          Insurance Ombudsman - One Stop Grievance Resolution
         </div>
       </div>
       <div className=""></div>
@@ -271,7 +301,6 @@ const Navbar = () => {
       </div>
 
       <div className="text-blue-600  text-2xl m-3">
-       
         <div className="   flex   lg:flex-row  m-10">
           <div className=" w-full lg:w-1/2">
             <div className="font-bold text-2xl text-green-900 ">
@@ -288,11 +317,7 @@ const Navbar = () => {
               Intermediaries or Insurance Brokers in a speedy and cost-effective
               manner
             </div>
-
-            
           </div>
-
-          
         </div>
 
         {/* //footer */}
