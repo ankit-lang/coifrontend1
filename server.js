@@ -64,7 +64,7 @@ app.post("/client/edit",async  (req, res) => {
         // Example check and update
         if (record.phone == savedData.phone  ) { // Replace with actual phone value
           updated = true;
-          console.log(savedData)
+        
           return { ...savedData }; // Example update
         }
   
@@ -81,8 +81,7 @@ app.post("/client/edit",async  (req, res) => {
     }
   
     // Write updated records back to the file
-    console.log(updatedRecords)
-    console.log(updated)
+   
     const updatedFileData = updatedRecords.map(record => JSON.stringify(record));
     fs.writeFile(filePath, updatedFileData, 'utf8', (writeErr) => {
       if (writeErr) {

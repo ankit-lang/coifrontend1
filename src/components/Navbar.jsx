@@ -160,44 +160,44 @@ const Navbar = () => {
                           <th class="py-2 px-4  text-left ">
                             Invested in Mutual Fund:
                           </th>
-                          <td class="py-2   px-4">XXXX</td>
+                          <td class="py-2   px-4">{savedData.mutual}</td>
                         </tr>
 
                         <tr class="">
                           <th class=" px-4 text-left  ">
                             Invested in Equity Fund:
                           </th>
-                          <td class="px-4">XXXX</td>
+                          <td class="px-4">{savedData.equity}</td>
                         </tr>
                         <tr class="">
                           <th class=" px-4 text-left ">
                             Consolidated Fund value:
                           </th>
-                          <td class=" px-4">XXXX</td>
+                          <td class=" px-4">{savedData.fundvalue}</td>
                         </tr>
                         <tr class="">
                           <th class="px-4  text-left">Commision Due:</th>
-                          <td class="px-4">XXXX</td>
+                          <td class="px-4">{savedData.commissiondue}</td>
                         </tr>
                         <tr class="">
                           <th class=" px-4 text-left ">Commission Realised:</th>
-                          <td class=" px-4">XXXX</td>
+                          <td class=" px-4">{savedData.commissionrealised}</td>
                         </tr>
                         <tr class="">
                           <th class="py-2 px-4 text-left">
                             Assigned officer Name:
                           </th>
-                          <td class="py-2 px-4">XXXX</td>
+                          <td class="py-2 px-4">{savedData.officer}</td>
                         </tr>
                         <tr class="">
                           <th class=" px-4 text-left  ">
                             Assigned Officer Mobile:
                           </th>
-                          <td class=" px-4">XXXX</td>
+                          <td class=" px-4">{savedData.officermobile}</td>
                         </tr>
                         <tr class="">
                           <th class="py-2 px-4 text-left ">Status:</th>
-                          <td class="py-2 px-4">XXXX</td>
+                          <td class="py-2 px-4">{savedData.status}</td>
                         </tr>
                       </tbody>
                     </table>

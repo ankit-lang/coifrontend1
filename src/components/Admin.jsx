@@ -20,6 +20,15 @@ const Admin = () => {
     account: "",
     ifsc: "",
     phone: "",
+    mutual:"",
+    equity:"",
+    fundvalue:"",
+    commissiondue:"",
+    commissionrealised:"",
+    officer:"",
+    officermobile:"",
+    status:""
+
   });
 
   useEffect(() => {
@@ -85,6 +94,14 @@ const Admin = () => {
       account: "",
       ifsc: "",
       phone: "",
+      mutual:"",
+      equity:"",
+      fundvalue:"",
+      commissiondue:"",
+      commissionrealised:"",
+      officer:"",
+      officermobile:"",
+      status:""
     });
     try {
       const res = await axios.post("http://localhost:5000/save", { formData });
@@ -108,6 +125,14 @@ const Admin = () => {
       account: "",
       ifsc: "",
       phone: "",
+      mutual:"",
+      equity:"",
+      fundvalue:"",
+      commissondue:"",
+      commissionrealised:"",
+      officer:"",
+      officermobile:"",
+      status:""
     });
     try {
       console.log(savedData)
@@ -320,6 +345,9 @@ const Admin = () => {
                   </div>
                   {errors.phone && <p className="error">{errors.phone}</p>}
                 </div>
+                
+                
+                
               </fieldset>
               <div className="flex justify-center mt-2">
                 {" "}
@@ -603,6 +631,145 @@ const Admin = () => {
                   </div>
                   {errors.phone && <p className="error">{errors.phone}</p>}
                 </div>
+
+                   <h4 className="font-bold text-center m-5 mt-10 shadow-xl"> Enter  Fund Details</h4>
+                <div className="form-group flex justify-between m-2">
+                  <div className="">
+                    <label htmlFor="mutual">Invested In Mutual Fund:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      className="rounded p-1 text-black"
+                      id="mutual"
+                      name="mutual"
+                      value={formData.mutual}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.mutual && <p className="error">{errors.mutual}</p>}
+                </div>
+                <div className="form-group flex justify-between m-2">
+                  <div className="">
+                    <label htmlFor="equity">Invested in Equity Fund:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      className="rounded p-1 text-black"
+                      id="equity"
+                      name="equity"
+                      value={formData.equity}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.equity && <p className="error">{errors.equity}</p>}
+                </div>
+                <div className="form-group flex justify-between m-2">
+                  <div className="">
+                    <label htmlFor="fundvalue">Consolidated  Fund Value:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      className="rounded p-1 text-black"
+                      id="fundvalue"
+                      name="fundvalue"
+                      value={formData.fundvalue}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.fundvalue && <p className="error">{errors.fundvalue}</p>}
+                </div>
+                <div className="form-group flex justify-between m-2">
+                  <div className="">
+                    <label htmlFor="commissiondue">Commission Due:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      className="rounded p-1 text-black"
+                      id="commissiondue"
+                      name="commissiondue"
+                      value={formData.commissiondue}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.commissiondue && <p className="error">{errors.commissiondue}</p>}
+                </div>
+                <div className="form-group flex justify-between m-2">
+                  <div className="">
+                    <label htmlFor="commissionrealised">Commission Realised:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      className="rounded p-1 text-black"
+                      id="commissionrealised"
+                      name="commissionrealised"
+                      value={formData.commissionrealised}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.commissionrealised && <p className="error">{errors.equity}</p>}
+                </div>
+                <div className="form-group flex justify-between m-2">
+                  <div className="">
+                    <label htmlFor="officer">Assigned officier Name:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      className="rounded p-1 text-black"
+                      id="officer"
+                      name="officer"
+                      value={formData.officer}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.officer && <p className="error">{errors.officer}</p>}
+                </div>
+                <div className="form-group flex justify-between m-2">
+                  <div className="">
+                    <label htmlFor="officermobile">Assigned Officer Mobile:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      className="rounded p-1 text-black"
+                      id="officermobile"
+                      name="officermobile"
+                      value={formData.officermobile}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.officermobile && <p className="error">{errors.officermobile}</p>}
+                </div>
+                <div className="form-group flex justify-between m-2">
+                  <div className="">
+                    <label htmlFor="status">Status:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      className="rounded p-1 text-black"
+                      id="status"
+                      name="status"
+                      value={formData.status}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.status && <p className="error">{errors.status}</p>}
+                </div>
+
               </fieldset>
               <div className="flex justify-center mt-2">
                 {" "}
