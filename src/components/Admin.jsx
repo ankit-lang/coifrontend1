@@ -96,6 +96,7 @@ const Admin = () => {
       console.log(error);
     }
   };
+  const [savedData, setSavedData] = useState({});
   const handleSubmit2 = async (e) => {
     e.preventDefault();
     setSavedData({
@@ -109,16 +110,17 @@ const Admin = () => {
       phone: "",
     });
     try {
+      console.log(savedData)
       const res = await axios.post("http://localhost:5000/client/edit", { savedData });
-
+      
     
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 
   const [anchorEl2, setAnchorEl2] = useState(null);
-  const [savedData, setSavedData] = useState({});
+
   const [isEdit, setIsEdit] = useState(false);
   const [myinput, setmyInput] = useState({
     phone: "",
@@ -234,7 +236,7 @@ const Admin = () => {
                     <input
                       type="text"
                       className="rounded p-1 text-black"
-                      id="DOV"
+                      id="DOB"
                
                       name="DOB"
                       value={savedData.DOB}
@@ -308,7 +310,7 @@ const Admin = () => {
                   <div className="">
                     {" "}
                     <input
-                      type="tel"
+                      type="number"
                       className="rounded p-1 text-black"
                       id="phone"
                       name="phone"
@@ -368,7 +370,7 @@ const Admin = () => {
                                 <div className="">
                                   <input
                                     className="rounded p-2 bg-green-200 "
-                                    type="text"
+                                    type="number"
                                     name="phone"
                                     value={myinput.phone}
                                     placeholder="Enter Your Phone no"

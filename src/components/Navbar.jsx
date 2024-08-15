@@ -120,7 +120,7 @@ const Navbar = () => {
                     <tbody>
                       <tr class=" ">
                         <th class=" px-4 text-left ">Complaint No.:</th>
-                        <td class=" px-4 ">   {savedData.name}</td>
+                        <td class=" px-4 ">   {savedData.Complaintno}</td>
                       </tr>
                       <tr class=" ">
                         <th class=" px-4 text-left  ">Name:</th>

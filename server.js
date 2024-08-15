@@ -9,8 +9,9 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = 5000;
 app.use(cors());
+app.use(express.json());
 
-app.post("/save", express.json(), (req, res) => {
+app.post("/save", (req, res) => {
   const { formData } = req.body;
   let data = formData;
   data = JSON.stringify(data);
@@ -35,7 +36,8 @@ app.post("/save", express.json(), (req, res) => {
   });
 });
 
-app.post("/client/edit", express.json(), (req, res) => {
+app.post("/client/edit",async  (req, res) => {
+
   const { savedData } = req.body;
   if (!savedData) {
     return res.status(400).json({ message: "No data provided" });
@@ -44,53 +46,52 @@ app.post("/client/edit", express.json(), (req, res) => {
  
 
   const filePath = path.join(__dirname, "data", "client.txt");
-  fs.readFile(filePath, "utf8", (err, fileData) => {
-    if (err && err.code !== "ENOENT") {
-      // Handle file read error
-      return res.status(500).json({ message: "Failed to read data" });
-    }
-    const records = fileData.trim().split(/(?<=})\s*(?={)/g);
+
+
+  if (existsSync(filePath)) {
+    const data = await fs.readFile(filePath, "utf8");
+   
+
+    const records = data.trim().split(/(?<=})\s*(?={)/g);
+ 
+  
     let updated = false;
     const updatedRecords = records.map((recordStr) => {
       try {
         const record = JSON.parse(recordStr);
-
-        // Check if the phone number matches and update the record
-        if (record.phone === phone) {
+       
+  
+        // Example check and update
+        if (record.phone == savedData.phone  ) { // Replace with actual phone value
           updated = true;
-          return { ...record, ...newData }; // Update the record
+          console.log(savedData)
+          return { ...savedData }; // Example update
         }
-
+  
         return record;
       } catch (parseError) {
-        // Handle JSON parse error
         console.error("Failed to parse record:", parseError);
-        // Return original record if parse fails
+         // Return original record if parsing fails
       }
     });
+  
     if (!updated) {
-      return res.status(404).json({ message: "Record not found" });
+      console.log("No records were updated.");
+      return;
     }
-    const updatedFileData = updatedRecords.map((record) =>
-      JSON.stringify(record)
-    );
-    console.log(updatedFileData)
-
-    // Update the existing data with the new data
-    // This example assumes `savedData` is an object that will be added/updated in the array
-
-    // Write the updated data back to the file
-    fs.writeFile(filePath, updatedFileData, (writeErr) => {
+  
+    // Write updated records back to the file
+    console.log(updatedRecords)
+    console.log(updated)
+    const updatedFileData = updatedRecords.map(record => JSON.stringify(record));
+    fs.writeFile(filePath, updatedFileData, 'utf8', (writeErr) => {
       if (writeErr) {
-        // Handle file write error
-        return res.status(500).json({ message: "Failed to save data" });
+        console.error("Failed to write data:", writeErr);
+        return;
       }
-      res.status(200).json({ message: "Data updated successfully" });
+      console.log("File updated successfully.");
     });
-  });
-  res.json({
-    message: "Data updated successfully",
-  });
+  }
 
 });
 
