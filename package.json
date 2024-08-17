@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start:client": " npm run dev",
-    "start:server": "nodemon server.js",
-    "start": "concurrently \"npm run start:client\" \"npm run start:server\"",
+    
+
+    
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

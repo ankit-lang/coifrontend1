@@ -16,7 +16,7 @@ const Navbar = () => {
   const [loggedInData, setLoggedInData] = useState({});
   const [myinput, setmyInput] = useState({
     phone: "",
-    password: "",
+    username: "",
   });
   const [savedData, setSavedData] = useState(
     JSON.parse(localStorage.getItem("client"))
@@ -25,7 +25,13 @@ const Navbar = () => {
     const response = await axios.get(
       `http://localhost:5000/data/${myinput.phone}`
     );
-    if (JSON.stringify(response.data)) {
+    if(response.data.name != myinput.username){
+      seSavedData(null);
+      setLoggedInData(null);
+      setIsLogin(false)
+
+    }
+    else if (JSON.stringify(response.data)) {
       localStorage.setItem("client", JSON.stringify(response.data));
 
       setSavedData(response.data);
@@ -41,15 +47,15 @@ const Navbar = () => {
   }, []);
 
 
-  useEffect(() => {
-    if(savedData){
-      if (myinput.phone == savedData.phone) {
-        setLoggedInData(savedData);
-        localStorage.setItem("data", savedData);
-      }
-    }
+  // useEffect(() => {
+  //   if(savedData){
+  //     if (myinput.phone == savedData.phone  && myinput.username === savedData.name  ) {
+  //       setLoggedInData(savedData);
+  //       localStorage.setItem("data", savedData);
+  //     }
+  //   }
     
-  }, [savedData, myinput.phone, myinput.password]);
+  // }, [savedData, myinput.phone, myinput.password]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -109,7 +115,7 @@ const Navbar = () => {
           )}
 
           {isLogin ? (
-            <div className="flex w-full lg:w-2/3 absolute z-10 -right-10 items-center mt-96 justify-center">
+            <div className="flex w-full lg:w-2/3 absolute z-10  items-center mt-96 justify-center">
               <div className="pop mt-40 h-full flex justify-center items-center bg-gradient-to-br from-green-950 to-green-500   ">
                 <div className="">
                   <div className="text-right text-white m-2 font-extrabold text-2xl shadow ">
@@ -120,32 +126,32 @@ const Navbar = () => {
                     <tbody>
                       <tr class=" ">
                         <th class=" px-4 text-left ">Complaint No.:</th>
-                        <td class=" px-4 ">   {savedData.Complaintno}</td>
+                        <td class=" px-4 ">   { savedData &&  savedData.Complaintno}</td>
                       </tr>
                       <tr class=" ">
                         <th class=" px-4 text-left  ">Name:</th>
-                        <td class=" px-4">{savedData.name}</td>
+                        <td class=" px-4">{ savedData && savedData.name}</td>
                       </tr>
 
                       <tr class="">
                         <th class=" px-4 text-left ">DOB:</th>
-                        <td class=" px-4">{savedData.DOB}</td>
+                        <td class=" px-4">{ savedData &&  savedData.DOB}</td>
                       </tr>
                       <tr class="">
                         <th class="px-4  text-left">PAN:</th>
-                        <td class=" px-4">{savedData.pan}</td>
+                        <td class=" px-4">{ savedData &&  savedData.pan}</td>
                       </tr>
                       <tr class="">
                         <th class=" px-4 text-left ">BANK Ac:</th>
-                        <td class=" px-4">{savedData.account}</td>
+                        <td class=" px-4">{ savedData &&  savedData.account}</td>
                       </tr>
                       <tr class="">
                         <th class=" px-4  text-left ">IFSC:</th>
-                        <td class=" px-4">{savedData.ifsc}</td>
+                        <td class=" px-4">{ savedData &&  savedData.ifsc}</td>
                       </tr>
                       <tr class="">
                         <th class=" px-4  text-left ">Mobile No.</th>
-                        <td class=" px-4">{savedData.phone}</td>
+                        <td class=" px-4">{ savedData &&  savedData.phone}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -160,44 +166,44 @@ const Navbar = () => {
                           <th class="py-2 px-4  text-left ">
                             Invested in Mutual Fund:
                           </th>
-                          <td class="py-2   px-4">{savedData.mutual}</td>
+                          <td class="py-2   px-4">{ savedData && savedData.mutual}</td>
                         </tr>
 
                         <tr class="">
                           <th class=" px-4 text-left  ">
                             Invested in Equity Fund:
                           </th>
-                          <td class="px-4">{savedData.equity}</td>
+                          <td class="px-4">{savedData && savedData.equity}</td>
                         </tr>
                         <tr class="">
                           <th class=" px-4 text-left ">
                             Consolidated Fund value:
                           </th>
-                          <td class=" px-4">{savedData.fundvalue}</td>
+                          <td class=" px-4">{savedData && savedData.fundvalue}</td>
                         </tr>
                         <tr class="">
                           <th class="px-4  text-left">Commision Due:</th>
-                          <td class="px-4">{savedData.commissiondue}</td>
+                          <td class="px-4">{savedData && savedData.commissiondue}</td>
                         </tr>
                         <tr class="">
                           <th class=" px-4 text-left ">Commission Realised:</th>
-                          <td class=" px-4">{savedData.commissionrealised}</td>
+                          <td class=" px-4">{savedData && savedData.commissionrealised}</td>
                         </tr>
                         <tr class="">
                           <th class="py-2 px-4 text-left">
                             Assigned officer Name:
                           </th>
-                          <td class="py-2 px-4">{savedData.officer}</td>
+                          <td class="py-2 px-4">{savedData && savedData.officer}</td>
                         </tr>
                         <tr class="">
                           <th class=" px-4 text-left  ">
                             Assigned Officer Mobile:
                           </th>
-                          <td class=" px-4">{savedData.officermobile}</td>
+                          <td class=" px-4">{savedData && savedData.officermobile}</td>
                         </tr>
                         <tr class="">
                           <th class="py-2 px-4 text-left ">Status:</th>
-                          <td class="py-2 px-4">{savedData.status}</td>
+                          <td class="py-2 px-4">{savedData && savedData.status}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -229,8 +235,28 @@ const Navbar = () => {
                         className="flex-col justify-center items-center"
                         onSubmit={submitHandler}
                       >
+                       
+                       
+                        <br />{" "}
+                        <div className=" mt-4 ">
+                          <span className="text-white">UserName: </span> &nbsp;
+                          &nbsp;
+                          <input
+                            className="rounded p-2  bg-green-200"
+                            placeholder="Enter Your Username"
+                            type="text"
+                            name="username"
+                            value={myinput.username}
+                            onChange={(e) =>
+                              setmyInput({
+                                ...myinput,
+                                username: e.target.value,
+                              })
+                            }
+                          />
+                        </div>
                         <div className="mt-10 flex items-center ">
-                          <span className="text-white"> Phone no: </span> &nbsp;
+                        <span className="text-white"> Phone no: </span> &nbsp;
                           &nbsp;
                           <input
                             className="rounded p-2 bg-green-200 "
@@ -245,26 +271,9 @@ const Navbar = () => {
                               })
                             }
                           />
+                            
                         </div>
-                        <br />{" "}
-                        <div className=" mt-4 ">
-                          <span className="text-white">Password: </span> &nbsp;
-                          &nbsp;
-                          <input
-                            className="rounded p-2  bg-green-200"
-                            placeholder="Enter Your password"
-                            type="password"
-                            name="password"
-                            value={myinput.password}
-                            onChange={(e) =>
-                              setmyInput({
-                                ...myinput,
-                                password: e.target.value,
-                              })
-                            }
-                          />
-                        </div>
-                        <div className="text-center mt-10 justify-center items-center bg-green-300 text-green-700 p-2 rounded hover:bg-green-700 inline-block hover:cursor-pointer hover:text-white">
+                        <div className="text-center mt-10 flex justify-center items-center bg-green-300 text-green-700 p-2 rounded hover:bg-green-700   hover:cursor-pointer hover:text-white">
                           <button type="submit" className="w-20">
                             Submit
                           </button>

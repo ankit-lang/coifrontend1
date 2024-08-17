@@ -198,7 +198,7 @@ const Admin = () => {
                 </button>
                 {isEdit ? (
                   <>
-                  <div className="z-20 absolute  right-20 w-1/2 ">
+                  <div className="z-20 absolute  right-20  w-full lg:w-1/2  ">
                   <form
               onSubmit={handleSubmit2}
               className="bg-gradient-to-br   from-green-950 to-green-500   flex-col justify-center p-10 rounded shadow-lg items-center"
@@ -493,16 +493,16 @@ const Admin = () => {
           <div className="flex items-center  justify-center text ">
             <form
               onSubmit={handleSubmit}
-              className="bg-gradient-to-br from-green-950 to-green-500  w-3/5 flex-col justify-center p-10 rounded shadow-lg items-center"
+              className="bg-gradient-to-br from-green-950 to-green-500  lg:w-3/5  w-full ml-2 mr-2  flex-col justify-center p-10 rounded shadow-lg items-center"
             >
               <fieldset className=" text-white  ">
                 <legend className="text-center text-white font-bold text-2xl mb-2">
                   Client Information
                 </legend>
-                <div className="form-group m-2  justify-between items-center  flex">
-                  <div className="">
+                <div className="form-group m-2  justify-between items-center  flex-col flex lg:flex-row">
+                  <div className=" text-center ">
                     {" "}
-                    <label htmlFor="Complaintno " className="whitespace-nowrap">
+                    <label htmlFor="Complaintno " className="whitespace-nowrap  ">
                       {" "}
                       Complaint NO:
                     </label>
@@ -523,8 +523,8 @@ const Admin = () => {
                     <p className="error">{errors.Complaintno}</p>
                   )}
                 </div>
-                <div className="form-group m-2 flex justify-between items-center ">
-                  <div className="">
+                <div className="form-group m-2  justify-between items-center flex-col flex lg:flex-row ">
+                  <div className="text-center">
                     <label htmlFor="name"> Name:</label>
                   </div>
                   <div className="">
@@ -541,8 +541,8 @@ const Admin = () => {
                   {errors.name && <p className="error">{errors.name}</p>}
                 </div>
 
-                <div className="form-group m-2 flex justify-between">
-                  <div className="">
+                <div className="form-group m-2 flex-col items-center flex lg:flex-row justify-between">
+                  <div className="text-center">
                     {" "}
                     <label htmlFor="DOB">DOB:</label>
                   </div>
@@ -560,8 +560,8 @@ const Admin = () => {
                   {errors.DOB && <p className="error">{errors.DOB}</p>}
                 </div>
 
-                <div className="form-group flex justify-between m-2">
-                  <div className="">
+                <div className="form-group flex-col flex items-center lg:flex-row justify-between m-2">
+                  <div className="text-center">
                     <label htmlFor="pan">Pan:</label>
                   </div>
                   <div className="">
@@ -577,8 +577,8 @@ const Admin = () => {
                   </div>
                   {errors.pan && <p className="error">{errors.pan}</p>}
                 </div>
-                <div className="form-group m-2 flex justify-between">
-                  <div className="">
+                <div className="form-group m-2 flex-col items-center flex lg:flex-row justify-between">
+                  <div className="text-center">
                     {" "}
                     <label htmlFor="account">Account No:</label>
                   </div>
@@ -595,8 +595,8 @@ const Admin = () => {
                   </div>
                   {errors.account && <p className="error">{errors.account}</p>}
                 </div>
-                <div className="form-group flex justify-between m-2 ">
-                  <div className="">
+                <div className="form-group flex-col flex items-center lg:flex-row justify-between m-2 ">
+                  <div className="text-center">
                     {" "}
                     <label htmlFor="ifsc">IFSC:</label>
                   </div>
@@ -614,8 +614,8 @@ const Admin = () => {
                   {errors.ifsc && <p className="error">{errors.ifsc}</p>}
                 </div>
 
-                <div className="form-group flex justify-between m-2">
-                  <div className="">
+                <div className="form-group flex-col flex lg:flex-row items-center justify-between m-2">
+                  <div className="text-center">
                     <label htmlFor="phone">Phone:</label>
                   </div>
                   <div className="">
@@ -633,7 +633,7 @@ const Admin = () => {
                 </div>
 
                    <h4 className="font-bold text-center m-5 mt-10 shadow-xl"> Enter  Fund Details</h4>
-                <div className="form-group flex justify-between m-2">
+                <div className="form-group flex justify-between m-2 flex-col  lg:flex-row ">
                   <div className="">
                     <label htmlFor="mutual">Invested In Mutual Fund:</label>
                   </div>
@@ -650,7 +650,7 @@ const Admin = () => {
                   </div>
                   {errors.mutual && <p className="error">{errors.mutual}</p>}
                 </div>
-                <div className="form-group flex justify-between m-2">
+                <div className="form-group flex justify-between flex-col  lg:flex-row m-2">
                   <div className="">
                     <label htmlFor="equity">Invested in Equity Fund:</label>
                   </div>
@@ -667,7 +667,7 @@ const Admin = () => {
                   </div>
                   {errors.equity && <p className="error">{errors.equity}</p>}
                 </div>
-                <div className="form-group flex justify-between m-2">
+                <div className="form-group flex-col flex lg:flex-row justify-between m-2">
                   <div className="">
                     <label htmlFor="fundvalue">Consolidated  Fund Value:</label>
                   </div>
@@ -684,7 +684,7 @@ const Admin = () => {
                   </div>
                   {errors.fundvalue && <p className="error">{errors.fundvalue}</p>}
                 </div>
-                <div className="form-group flex justify-between m-2">
+                <div className="form-group flex-col flex lg:flex-row justify-between m-2">
                   <div className="">
                     <label htmlFor="commissiondue">Commission Due:</label>
                   </div>
@@ -701,7 +701,7 @@ const Admin = () => {
                   </div>
                   {errors.commissiondue && <p className="error">{errors.commissiondue}</p>}
                 </div>
-                <div className="form-group flex justify-between m-2">
+                <div className="form-group flex-col flex lg:flex-row justify-between m-2">
                   <div className="">
                     <label htmlFor="commissionrealised">Commission Realised:</label>
                   </div>
@@ -718,7 +718,7 @@ const Admin = () => {
                   </div>
                   {errors.commissionrealised && <p className="error">{errors.equity}</p>}
                 </div>
-                <div className="form-group flex justify-between m-2">
+                <div className="form-group flex-col flex lg:flex-row justify-between m-2">
                   <div className="">
                     <label htmlFor="officer">Assigned officier Name:</label>
                   </div>
@@ -735,7 +735,7 @@ const Admin = () => {
                   </div>
                   {errors.officer && <p className="error">{errors.officer}</p>}
                 </div>
-                <div className="form-group flex justify-between m-2">
+                <div className="form-group flex-col flex lg:flex-row justify-between m-2">
                   <div className="">
                     <label htmlFor="officermobile">Assigned Officer Mobile:</label>
                   </div>
@@ -752,7 +752,7 @@ const Admin = () => {
                   </div>
                   {errors.officermobile && <p className="error">{errors.officermobile}</p>}
                 </div>
-                <div className="form-group flex justify-between m-2">
+                <div className="form-group flex-col flex lg:flex-row justify-between m-2">
                   <div className="">
                     <label htmlFor="status">Status:</label>
                   </div>
