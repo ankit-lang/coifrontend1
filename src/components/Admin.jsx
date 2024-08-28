@@ -13,21 +13,21 @@ const Admin = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
-    Complaintno: "",
-
-    DOB: "",
-    pan: "",
-    account: "",
-    ifsc: "",
-    phone: "",
-    mutual:"",
-    equity:"",
-    fundvalue:"",
-    commissiondue:"",
-    commissionrealised:"",
-    officer:"",
-    officermobile:"",
-    status:""
+      complaintno: "",
+     password:"",
+      dob: "",
+      pan: "",
+      accountNumber: "",
+      ifsc: "",
+      phone: "",
+      investedInMutualFund:"",
+      investedInEquityFund:"",
+      fundvconsolidatedFundValuealue:"",
+      commissionDue:"",
+      commissionRealised:"",
+      assignedOfficerName:"",
+      assignedOfficerMobile:"",
+      status:""
 
   });
 
@@ -74,7 +74,7 @@ const Admin = () => {
       isValid = false;
     }
 
-    if (!formData.DOB) {
+    if (!formData.dob) {
       tempErrors.email = " is required";
       isValid = false;
     }
@@ -83,60 +83,101 @@ const Admin = () => {
     return isValid;
   };
 
+
+  const [clients,setClients] = useState(0);
+const getClients = async () => {
+  try {
+    const res = await axios.get("http://localhost:5000/count");
+
+    setClients(res.data.count)
+  } catch (error) {
+    
+  }
+}
+getClients()
+
+  useEffect(()=>{
+    setClients(clients)
+  },[clients])
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormData({
-      name: "",
-      Complaintno: "",
-
-      DOB: "",
-      pan: "",
-      account: "",
-      ifsc: "",
-      phone: "",
-      mutual:"",
-      equity:"",
-      fundvalue:"",
-      commissiondue:"",
-      commissionrealised:"",
-      officer:"",
-      officermobile:"",
-      status:""
-    });
+    console.log("object")
+    
     try {
       const res = await axios.post("http://localhost:5000/save", { formData });
-
-      console.log("object");
+      setFormData({
+        name: "",
+        complaintno: "",
+       password:"",
+        dob: "",
+        pan: "",
+        accountNumber: "",
+        ifsc: "",
+        phone: "",
+        investedInMutualFund:"",
+        investedInEquityFund:"",
+        fundvconsolidatedFundValue:"",
+        commissionDue:"",
+        commissionRealised:"",
+        assignedOfficerName:"",
+        assignedOfficerMobile:"",
+     
+        status:""
+      });
+    
       alert("Data submitted successfully");
       console.log("Form submitted", formData);
     } catch (error) {
       console.log(error);
     }
   };
-  const [savedData, setSavedData] = useState({});
+  const [savedData, setSavedData] = useState({name: "",
+        complaintno: "",
+  
+        dob: "",
+        pan: "",
+        accountNumber: "",
+        ifsc: "",
+        phone: "",
+        investedInMutualFund:"",
+        investedInEquityFund:"",
+        fundvconsolidatedFundValue:"",
+        commissionDue:"",
+        commissionRealised:"",
+        assignedOfficerName:"",
+        assignedOfficerMobile:"",
+        password:"",
+        status:""});
+
   const handleSubmit2 = async (e) => {
     e.preventDefault();
-    setSavedData({
-      name: "",
-      Complaintno: "",
-
-      DOB: "",
-      pan: "",
-      account: "",
-      ifsc: "",
-      phone: "",
-      mutual:"",
-      equity:"",
-      fundvalue:"",
-      commissondue:"",
-      commissionrealised:"",
-      officer:"",
-      officermobile:"",
-      status:""
-    });
+   
     try {
       console.log(savedData)
-      const res = await axios.post("http://localhost:5000/client/edit", { savedData });
+      const res = await axios.post("http://localhost:5000/update", { savedData });
+      setSavedData({
+        name: "",
+        complaintno: "",
+  
+        dob: "",
+        pan: "",
+        accountNumber: "",
+        ifsc: "",
+        phone: "",
+        investedInMutualFund:"",
+        investedInEquityFund:"",
+        fundvconsolidatedFundValuealue:"",
+        commissionDue:"",
+        commissionRealised:"",
+        assignedOfficerName:"",
+        assignedOfficerMobile:"",
+        password:"",
+        status:""
+      });
+      alert("Client Edited Successfully")
+      navigate("/admin")
       
     
     } catch (error) {
@@ -150,6 +191,7 @@ const Admin = () => {
   const [myinput, setmyInput] = useState({
     phone: "",
     password: "",
+    name:""
   });
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);
@@ -159,10 +201,11 @@ const Admin = () => {
     setAnchorEl2(null);
   };
   const handleFetchData = async () => {
-    const response = await axios.get(
-      `http://localhost:5000/data/${myinput.phone}`
+    const response = await axios.post(
+      `http://localhost:5000/client`, {...myinput}
     );
-    setSavedData(response.data);
+    setSavedData(response.data.user);
+    console.log(response.data.user)
    
   };
   const submitHandler = async (e) => {
@@ -223,7 +266,7 @@ const Admin = () => {
                       id="Complaintno"
                       name="Complaintno"
             
-                      value={savedData.Complaintno}
+                      value={savedData.complaintno}
                       onChange={handleChange2}
                     />
                   </div>
@@ -264,7 +307,7 @@ const Admin = () => {
                       id="DOB"
                
                       name="DOB"
-                      value={savedData.DOB}
+                      value={savedData.dob}
                       onChange={handleChange2}
                     />
                   </div>
@@ -302,7 +345,7 @@ const Admin = () => {
                  
                       className="rounded p-1 text-black"
                       name="account"
-                      value={savedData.account}
+                      value={savedData.accountNumber}
                       onChange={handleChange2}
                     />
                   </div>
@@ -340,6 +383,23 @@ const Admin = () => {
                       id="phone"
                       name="phone"
                       value={savedData.phone}
+                      onChange={handleChange2}
+                    />
+                  </div>
+                  {errors.phone && <p className="error">{errors.phone}</p>}
+                </div>
+                <div className="form-group flex justify-between m-2">
+                  <div className="">
+                    <label htmlFor="phone">Password:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="text"
+                      className="rounded p-1 text-black"
+                      id="phone"
+                      name="password"
+                      value={savedData.password}
                       onChange={handleChange2}
                     />
                   </div>
@@ -386,6 +446,35 @@ const Admin = () => {
                               onSubmit={submitHandler}
                             >
                               <div className="mt-10 flex-col justify-center text-center items-center ">
+                              <div className="">
+                              <div className="">
+                                <div className="">
+                                  {" "}
+                                  <span className="text-white">
+                                    {" "}
+                                    Name:{" "}
+                                  </span>{" "}
+                                  &nbsp;
+                                </div>
+                                &nbsp;
+                                <div className="">
+                                  <input
+                                    className="rounded p-2 bg-green-200 "
+                                    type="text"
+                                    name="name"
+                                    value={myinput.name}
+                                    placeholder="Enter Client Name"
+                                    onChange={(e) =>
+                                      setmyInput({
+                                        ...myinput,
+                                        name: e.target.value,
+                                      })
+                                    }
+                                  />
+                                </div>
+                                </div>
+                              </div>
+                                <div className="">
                                 <div className="">
                                   {" "}
                                   <span className="text-white">
@@ -398,14 +487,39 @@ const Admin = () => {
                                 <div className="">
                                   <input
                                     className="rounded p-2 bg-green-200 "
-                                    type="number"
+                                    type="text"
                                     name="phone"
                                     value={myinput.phone}
-                                    placeholder="Enter Your Phone no"
+                                    placeholder="Enter Client Phone no"
                                     onChange={(e) =>
                                       setmyInput({
                                         ...myinput,
                                         phone: e.target.value,
+                                      })
+                                    }
+                                  />
+                                </div>
+                                </div>
+                                <div className="">
+                                  {" "}
+                                  <span className="text-white">
+                                    {" "}
+                                    Password:{" "}
+                                  </span>{" "}
+                                  &nbsp;
+                                </div>
+                                &nbsp;
+                                <div className="">
+                                  <input
+                                    className="rounded p-2 bg-green-200 "
+                                    type="text"
+                                    name="password"
+                                    value={myinput.password}
+                                    placeholder="Enter client Password"
+                                    onChange={(e) =>
+                                      setmyInput({
+                                        ...myinput,
+                                        password: e.target.value,
                                       })
                                     }
                                   />
@@ -431,11 +545,15 @@ const Admin = () => {
                 <button
                   aria-describedby="popover2"
                   onClick={handleClick2}
-                  className="text-green-800 bg-white hover:text-white hover:bg-green-600 p-2 rounded  font-bold "
+                  className="text-green-800 mr-2 bg-white hover:text-white hover:bg-green-600 p-2 rounded  font-bold "
                 >
                   EDIT-CLIENT{" "}
                 </button>
+               <span className=" text-black inline-block p-2 rounded   bg-white   ">
+                {clients} Clients
+               </span>
               </div>
+              
             </div>
           </>
         ) : (
@@ -513,8 +631,8 @@ const Admin = () => {
                       type="text"
                       className="rounded p-1 text-black w-full "
                       id="Complaintno"
-                      name="Complaintno"
-                      value={formData.Complaintno}
+                      name="complaintno"
+                      value={formData.complaintno}
                       onChange={handleChange}
                     />
                   </div>
@@ -551,9 +669,9 @@ const Admin = () => {
                     <input
                       type="text"
                       className="rounded p-1 text-black"
-                      id="DOV"
-                      name="DOB"
-                      value={formData.DOB}
+                      id="DOB"
+                      name="dob"
+                      value={formData.dob}
                       onChange={handleChange}
                     />
                   </div>
@@ -588,8 +706,8 @@ const Admin = () => {
                       type="text"
                       id="account"
                       className="rounded p-1 text-black"
-                      name="account"
-                      value={formData.account}
+                      name="accountNumber"
+                      value={formData.accountNumber}
                       onChange={handleChange}
                     />
                   </div>
@@ -631,6 +749,23 @@ const Admin = () => {
                   </div>
                   {errors.phone && <p className="error">{errors.phone}</p>}
                 </div>
+                <div className="form-group flex-col flex lg:flex-row items-center justify-between m-2">
+                  <div className="text-center">
+                    <label htmlFor="password">Password:</label>
+                  </div>
+                  <div className="">
+                    {" "}
+                    <input
+                      type="tel"
+                      className="rounded p-1 text-black"
+                      id="password"
+                      name="password"
+                      value={formData.passwrord}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.phone && <p className="error">{errors.phone}</p>}
+                </div>
 
                    <h4 className="font-bold text-center m-5 mt-10 shadow-xl"> Enter  Fund Details</h4>
                 <div className="form-group flex justify-between m-2 flex-col  lg:flex-row ">
@@ -643,8 +778,8 @@ const Admin = () => {
                       type="text"
                       className="rounded p-1 text-black"
                       id="mutual"
-                      name="mutual"
-                      value={formData.mutual}
+                      name="investedInMutualFund"
+                      value={formData.investedInMutualFund}
                       onChange={handleChange}
                     />
                   </div>
@@ -660,8 +795,8 @@ const Admin = () => {
                       type="text"
                       className="rounded p-1 text-black"
                       id="equity"
-                      name="equity"
-                      value={formData.equity}
+                      name="investedInEquityFund"
+                      value={formData.investedInEquityFund}
                       onChange={handleChange}
                     />
                   </div>
@@ -677,8 +812,8 @@ const Admin = () => {
                       type="text"
                       className="rounded p-1 text-black"
                       id="fundvalue"
-                      name="fundvalue"
-                      value={formData.fundvalue}
+                      name="fundconsolidateFundValue"
+                      value={formData.fundvconsolidatedFundValuee}
                       onChange={handleChange}
                     />
                   </div>
@@ -694,8 +829,8 @@ const Admin = () => {
                       type="text"
                       className="rounded p-1 text-black"
                       id="commissiondue"
-                      name="commissiondue"
-                      value={formData.commissiondue}
+                      name="commissionDue"
+                      value={formData.commissionDue}
                       onChange={handleChange}
                     />
                   </div>
@@ -711,8 +846,8 @@ const Admin = () => {
                       type="text"
                       className="rounded p-1 text-black"
                       id="commissionrealised"
-                      name="commissionrealised"
-                      value={formData.commissionrealised}
+                      name="commissionRealised"
+                      value={formData.commissionRealised}
                       onChange={handleChange}
                     />
                   </div>
@@ -728,8 +863,8 @@ const Admin = () => {
                       type="text"
                       className="rounded p-1 text-black"
                       id="officer"
-                      name="officer"
-                      value={formData.officer}
+                      name="assignedOfficerName"
+                      value={formData.assignedOfficerName}
                       onChange={handleChange}
                     />
                   </div>
@@ -745,8 +880,8 @@ const Admin = () => {
                       type="text"
                       className="rounded p-1 text-black"
                       id="officermobile"
-                      name="officermobile"
-                      value={formData.officermobile}
+                      name="assignedOfficerMobile"
+                      value={formData.assignedOfficerMobile}
                       onChange={handleChange}
                     />
                   </div>
